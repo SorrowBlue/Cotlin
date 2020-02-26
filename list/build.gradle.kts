@@ -6,4 +6,5 @@ android {
 }
 dependencies {
 	implementation(project(Modules.ui))
+	implementation(Libs.swiperefreshlayout)
 }

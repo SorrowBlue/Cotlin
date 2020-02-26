@@ -8,6 +8,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.*
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 internal class FolderListViewModel(
@@ -27,9 +28,10 @@ internal class FolderListViewModel(
 		}
 	}
 
-	private fun refresh() {
+	fun refresh() {
 		isLoading.value = true
 		viewModelScope.launch {
+			delay(3000)
 			context.contentResolver.query(
 				MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
 				null,

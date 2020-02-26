@@ -3,8 +3,6 @@ package com.sorrowblue.cotlin
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.Toolbar
 import androidx.core.app.ActivityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
@@ -12,41 +10,31 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.appbar.AppBarLayout
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.navigation.NavigationView
-import com.google.android.material.snackbar.Snackbar
+import com.sorrowblue.cotlin.databinding.ActivityMainBinding
+import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
 import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsets
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 	private lateinit var appBarConfiguration: AppBarConfiguration
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		setContentView(R.layout.activity_main)
-		val toolbar: Toolbar = findViewById(R.id.toolbar)
-		setSupportActionBar(toolbar)
-
-		val fab: FloatingActionButton = findViewById(R.id.fab)
-		fab.setOnClickListener { view ->
-			Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-				.setAction("Action", null).show()
-		}
-		val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-		val navView: NavigationView = findViewById(R.id.nav_view)
+		setSupportActionBar(binding.appBarMain.toolbar)
+		val drawerLayout: DrawerLayout = binding.drawerLayout
+		val navView: NavigationView = binding.navView
 		val navController = findNavController(R.id.nav_host_fragment)
-		// Passing each menu ID as a set of Ids because each
-		// menu should be considered as top level destinations.
 		appBarConfiguration = AppBarConfiguration(
 			setOf(
+				R.id.folderListFragment,
 				R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
 			), drawerLayout
 		)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		navView.setupWithNavController(navController)
 		contentView.systemUiVisibility = FULL_SCREEN
-		findViewById<AppBarLayout>(R.id.app_bar_layout).applySystemBarPaddingInsets()
+		binding.appBarMain.appBarLayout.applySystemBarPaddingInsets()
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {

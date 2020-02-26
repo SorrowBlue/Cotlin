@@ -10,15 +10,12 @@
 			type="com.sorrowblue.cotlin.list.FolderListViewModel" />
 	</data>
 
-	<FrameLayout
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:id="@+id/swipeRefreshLayout"
+		isRefreshing="@{viewModel.isLoading}"
+		onRefresh="@{() -> viewModel.refresh()}"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
-
-		<androidx.core.widget.ContentLoadingProgressBar
-			style="@style/Widget.AppCompat.ProgressBar.Horizontal"
-			isShown="@{viewModel.isLoading}"
-			android:layout_width="match_parent"
-			android:layout_height="wrap_content" />
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recyclerView"
@@ -29,9 +26,8 @@
 			android:orientation="vertical"
 			app:adapter="@{viewModel.adapter}"
 			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-			app:spanCount="1"
-			tools:itemCount="40"
+			app:spanCount="2"
+			tools:itemCount="7"
 			tools:listitem="@layout/list_recycler_view_item_folder" />
-
-	</FrameLayout>
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 </layout>
