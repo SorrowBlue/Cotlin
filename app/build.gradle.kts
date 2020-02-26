@@ -14,8 +14,10 @@ android {
 			)
 		}
 	}
-	dataBinding.isEnabled = true
-	viewBinding.isEnabled = true
+	buildFeatures {
+		dataBinding = true
+		viewBinding = true
+	}
 }
 
 dependencies {

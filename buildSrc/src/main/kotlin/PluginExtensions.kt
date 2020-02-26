@@ -19,7 +19,8 @@ val PluginAware.`kotlin-android` get() = apply(plugin = "kotlin-android")
 val PluginAware.`kotlin-kapt` get() = apply(plugin = "kotlin-kapt")
 
 
-val DependencyHandler.`android-tools-build-gradle` get() = "com.android.tools.build:gradle:3.6.0"
+fun DependencyHandler.`android-tools-build-gradle`(version: String) =
+	"com.android.tools.build:gradle:$version"
 
 fun DependencyHandler.`google-services`(version: String) = "com.google.gms:google-services:$version"
 val DependencyHandler.`navigation-safe-args-gradle-plugin`
