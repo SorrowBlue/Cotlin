@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="com.sorrowblue.cotlin.list.FolderListViewModel" />
+	</data>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<androidx.core.widget.ContentLoadingProgressBar
+			style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+			isShown="@{viewModel.isLoading}"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content" />
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerView"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clipChildren="false"
+			android:clipToPadding="false"
+			android:orientation="vertical"
+			app:adapter="@{viewModel.adapter}"
+			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+			app:spanCount="1"
+			tools:itemCount="40"
+			tools:listitem="@layout/list_recycler_view_item_folder" />
+
+	</FrameLayout>
+</layout>

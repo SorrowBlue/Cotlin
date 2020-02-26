@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+		<item name="android:navigationBarColor">@color/navigation_bar_color</item>
+		<item name="android:statusBarColor">@android:color/transparent</item>
+
+		<item name="colorPrimary">@color/color_primary</item>
+		<item name="colorPrimaryDark">@color/color_primary_dark</item>
+		<item name="colorPrimaryVariant">@color/color_primary_variant</item>
+
+		<item name="colorSecondary">@color/color_secondary</item>
+		<item name="colorSecondaryVariant">@color/color_secondary_variant</item>
+
+		<item name="colorOnPrimary">@android:color/white</item>
+		<item name="colorOnSecondary">@android:color/white</item>
+
+		<item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
+		<item name="shapeAppearanceMediumComponent">@style/ShapeAppearance.App.MediumComponent
+		</item>
+		<item name="shapeAppearanceLargeComponent">@style/ShapeAppearance.App.LargeComponent</item>
+	</style>
+
+	<style name="AppTheme.Dialog" parent="Theme.MaterialComponents.DayNight.Dialog">
+		<item name="android:background">?attr/colorSurface</item>
+		<item name="dialogCornerRadius">16dp</item>
+	</style>
+
+	<style name="ThemeOverlay.App.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
+
+	<style name="ThemeOverlay.App.AppBarOverlay" parent="ThemeOverlay.MaterialComponents.Dark.ActionBar" />
+
+	<style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">16dp</item>
+	</style>
+
+	<style name="ShapeAppearance.App.MediumComponent" parent="ShapeAppearance.MaterialComponents.MediumComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">16dp</item>
+	</style>
+
+	<style name="ShapeAppearance.App.LargeComponent" parent="ShapeAppearance.MaterialComponents.LargeComponent">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">16dp</item>
+	</style>
+
+	<style name="ShapeAppearance.App.CIRCLE" parent="">
+		<item name="cornerFamily">rounded</item>
+		<item name="cornerSize">50%</item>
+
+	</style>
+</resources>

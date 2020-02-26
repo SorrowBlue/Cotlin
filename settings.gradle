@@ -1,0 +1,4 @@
+include ':list'
+include ':ui'
+include ':app'
+rootProject.name = "Cotlin"

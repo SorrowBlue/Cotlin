@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<color name="color_primary">#00796b</color>
+	<color name="color_primary_variant">#004d40</color>
+	<color name="color_primary_dark">#004d40</color>
+	<color name="color_secondary">#7c4dff</color>
+	<color name="color_secondary_variant">#7b3045</color>
+	<color name="navigation_bar_color">#90000000</color>
+
+	<array name="circle_color_scheme">
+		<item>@android:color/holo_red_dark</item>
+		<item>@android:color/holo_green_dark</item>
+		<item>@android:color/holo_blue_dark</item>
+	</array>
+</resources>

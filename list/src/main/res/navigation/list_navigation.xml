@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/list_navigation"
+    app:startDestination="@id/folderListFragment">
+
+    <fragment
+        android:id="@+id/folderListFragment"
+        android:name="com.sorrowblue.cotlin.list.FolderListFragment"
+        android:label="FolderListFragment">
+        <action
+            android:id="@+id/fileListFragment"
+            app:destination="@id/fileListFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fileListFragment"
+        android:name="com.sorrowblue.cotlin.list.FileListFragment"
+        android:label="FileListFragment">
+        <argument
+            android:name="folder"
+            app:argType="com.sorrowblue.cotlin.list.Folder" />
+    </fragment>
+</navigation>
