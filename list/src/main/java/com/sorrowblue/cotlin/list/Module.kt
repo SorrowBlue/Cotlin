@@ -5,6 +5,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 fun listModule() = module {
-	single { FolderListAdapter() }
+	single { FolderListAdapter(androidContext()) }
 	viewModel { FolderListViewModel(androidContext(), get()) }
 }

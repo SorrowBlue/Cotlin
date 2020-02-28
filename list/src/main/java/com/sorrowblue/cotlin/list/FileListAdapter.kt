@@ -1,56 +1,41 @@
 package com.sorrowblue.cotlin.list
 
 import android.view.ViewGroup
-import androidx.recyclerview.widget.DiffUtil
-import androidx.recyclerview.widget.RecyclerView
+import androidx.core.view.ViewCompat
+import androidx.navigation.fragment.FragmentNavigator
+import androidx.navigation.fragment.FragmentNavigatorExtras
 import coil.api.load
-import com.sorrowblue.cotlin.ui.view.inflater
-import kotlin.properties.Delegates
+import com.sorrowblue.cotlin.ui.recyclerview.DataBindAdapter
 import com.sorrowblue.cotlin.list.databinding.ListRecyclerViewItemFileBinding as ItemBinding
 
-private class FileListDiffCallback(
-	private val old: List<Image>,
-	private val new: List<Image>
-) : DiffUtil.Callback() {
-	override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-		return old[oldItemPosition].name == new[newItemPosition].name
+internal class FileListAdapter : DataBindAdapter<Image, ItemBinding, FileListAdapter.ViewHolder>() {
+
+	fun setList(list: List<Image>) {
+		currentList = list
 	}
 
-	override fun getOldListSize(): Int {
-		return old.size
+	private lateinit var listener: (Image, Int, FragmentNavigator.Extras) -> Unit
+
+	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent)
+	override fun areItemsTheSame(old: Image, new: Image) = old.uri == new.uri
+	override fun areContentsTheSame(old: Image, new: Image) = old == new
+
+	fun setOnClickListener(action: (Image, Int, FragmentNavigator.Extras) -> Unit) {
+		this.listener = action
 	}
 
-	override fun getNewListSize(): Int {
-		return new.size
-	}
-
-	override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-		return old[oldItemPosition] == new[newItemPosition]
-	}
-
-}
-
-internal class FileListAdapter : RecyclerView.Adapter<FileListAdapter.ViewHolder>() {
-
-	var currentList: List<Image> by Delegates.observable(emptyList()) { _, old, new ->
-		DiffUtil.calculateDiff(FileListDiffCallback(old, new)).dispatchUpdatesTo(this)
-	}
-
-	class ViewHolder(val binding: ItemBinding) : RecyclerView.ViewHolder(binding.root) {
-		constructor(parent: ViewGroup) : this(ItemBinding.inflate(parent.inflater, parent, false))
-	}
-
-	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-		return ViewHolder(parent)
-	}
-
-	override fun getItemCount(): Int {
-		return currentList.size
-	}
-
-	override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-		holder.binding.imageView.load(currentList[position].uri) {
-			placeholder(R.drawable.list_ic_twotone_folder)
+	inner class ViewHolder(parent: ViewGroup) : DataBindAdapter.ViewHolder<Image, ItemBinding>(
+		parent, R.layout.list_recycler_view_item_file
+	) {
+		override fun bind(value: Image, position: Int) {
+			binding.imageView.load(currentList[position].uri) {
+				placeholder(R.drawable.list_ic_twotone_folder)
+			}
+			ViewCompat.setTransitionName(binding.imageView, "imageView_$position")
+			binding.imageView.setOnClickListener {
+				val extras = FragmentNavigatorExtras(it to "imageView_$position")
+				listener.invoke(currentList[position], position, extras)
+			}
 		}
 	}
 }

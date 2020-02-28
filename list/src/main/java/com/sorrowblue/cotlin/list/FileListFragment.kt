@@ -3,9 +3,10 @@ package com.sorrowblue.cotlin.list
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.ViewCompat
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import androidx.transition.Transition
-import androidx.transition.TransitionInflater
+import com.google.android.material.transition.MaterialContainerTransform
+import com.sorrowblue.cotlin.list.FileListFragmentDirections.Companion.actionFileListFragmentToImageFragment
 import com.sorrowblue.cotlin.list.databinding.ListFragmentFileBinding
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.toolbar
@@ -17,26 +18,24 @@ internal class FileListFragment :
 	private val args: FileListFragmentArgs by navArgs()
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		sharedElementEnterTransition = TransitionInflater.from(requireContext())
-			.inflateTransition(android.R.transition.move)
-			.addListener(object : Transition.TransitionListener {
-				override fun onTransitionEnd(transition: Transition) {
-					binding.root.background = null
-				}
-
-				override fun onTransitionResume(transition: Transition) {}
-				override fun onTransitionPause(transition: Transition) {}
-				override fun onTransitionCancel(transition: Transition) {}
-				override fun onTransitionStart(transition: Transition) {}
-
-			})
+		sharedElementEnterTransition = MaterialContainerTransform(requireContext())
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		adapter.currentList += args.folder.child
+		postponeEnterTransition()
+		adapter.setList(args.folder.child)
 		binding.recyclerView.adapter = adapter
-		ViewCompat.setTransitionName(binding.root, "root")
+		ViewCompat.setTransitionName(binding.root, "folder_imageView_${args.position}")
+		adapter.setOnClickListener { image, position, extras ->
+			findNavController().navigate(
+				actionFileListFragmentToImageFragment(image.uri, position), extras
+			)
+		}
+		view.viewTreeObserver.addOnPreDrawListener {
+			startPostponedEnterTransition()
+			true
+		}
 	}
 
 	override fun onStart() {

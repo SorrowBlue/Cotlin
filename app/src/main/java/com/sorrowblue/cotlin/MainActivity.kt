@@ -24,13 +24,9 @@ class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_
 		setSupportActionBar(binding.appBarMain.toolbar)
 		val drawerLayout: DrawerLayout = binding.drawerLayout
 		val navView: NavigationView = binding.navView
+		navView.getHeaderView(0).applySystemBarPaddingInsets()
 		val navController = findNavController(R.id.nav_host_fragment)
-		appBarConfiguration = AppBarConfiguration(
-			setOf(
-				R.id.folderListFragment,
-				R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
-			), drawerLayout
-		)
+		appBarConfiguration = AppBarConfiguration(setOf(R.id.folderListFragment), drawerLayout)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		navView.setupWithNavController(navController)
 		contentView.systemUiVisibility = FULL_SCREEN

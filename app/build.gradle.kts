@@ -4,14 +4,27 @@ android {
 		versionCode = 8
 		versionName = "1.0.0"
 	}
-
-	buildTypes {
+	signingConfigs {
 		release {
-			isMinifyEnabled = false
+			storeFile = file("M:/sorro/Documents/keystore.jks")
+			storePassword = "storeyuukiasuna2s2"
+			keyAlias = "SorrowBlueApp"
+			keyPassword = "appyuukiasuna2s2"
+		}
+
+	}
+	buildTypes {
+		debug {
+			applicationIdSuffix = ".debug"
+			versionNameSuffix = "_debug"
+		}
+		release {
+			isMinifyEnabled = true
 			proguardFiles(
 				getDefaultProguardFile("proguard-android-optimize.txt"),
 				"proguard-rules.pro"
 			)
+			signingConfig = signingConfigs.getByName(name)
 		}
 	}
 	buildFeatures {

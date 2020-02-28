@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<dimen name="header_icon">64dp</dimen>
+	<string name="app_name" translatable="false">Cotlin</string>
 </resources>
