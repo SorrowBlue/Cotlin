@@ -16,9 +16,12 @@ internal class FileListFragment :
 
 	private val adapter = FileListAdapter()
 	private val args: FileListFragmentArgs by navArgs()
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		sharedElementEnterTransition = MaterialContainerTransform(requireContext())
+		sharedElementEnterTransition = MaterialContainerTransform(requireContext()).apply {
+			fadeMode = MaterialContainerTransform.FADE_MODE_IN
+		}
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -26,13 +29,14 @@ internal class FileListFragment :
 		postponeEnterTransition()
 		adapter.setList(args.folder.child)
 		binding.recyclerView.adapter = adapter
-		ViewCompat.setTransitionName(binding.root, "folder_imageView_${args.position}")
+		ViewCompat.setTransitionName(binding.recyclerView, args.transitionName)
 		adapter.setOnClickListener { image, position, extras ->
 			findNavController().navigate(
-				actionFileListFragmentToImageFragment(image.uri, position), extras
+				actionFileListFragmentToImageFragment(args.folder.child.toTypedArray(), position),
+				extras
 			)
 		}
-		view.viewTreeObserver.addOnPreDrawListener {
+		binding.recyclerView.viewTreeObserver.addOnPreDrawListener {
 			startPostponedEnterTransition()
 			true
 		}

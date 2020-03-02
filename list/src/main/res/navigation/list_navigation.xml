@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/list_navigation"
-	app:startDestination="@id/folderListFragment">
+	app:startDestination="@id/folderListFragment"
+	tools:ignore="UnusedNavigation">
 
 	<fragment
 		android:id="@+id/folderListFragment"
@@ -22,8 +24,8 @@
 			android:name="folder"
 			app:argType="com.sorrowblue.cotlin.list.Folder" />
 		<argument
-			android:name="position"
-			app:argType="integer" />
+			android:name="transitionName"
+			app:argType="string" />
 		<action
 			android:id="@+id/action_fileListFragment_to_imageFragment"
 			app:destination="@id/imageFragment" />
@@ -33,8 +35,8 @@
 		android:name="com.sorrowblue.cotlin.list.ImageFragment"
 		android:label="画像名">
 		<argument
-			android:name="uri"
-			app:argType="android.net.Uri" />
+			android:name="images"
+			app:argType="com.sorrowblue.cotlin.list.Image[]" />
 		<argument
 			android:name="position"
 			app:argType="integer" />

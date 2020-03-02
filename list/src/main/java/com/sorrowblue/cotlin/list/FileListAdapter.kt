@@ -31,9 +31,9 @@ internal class FileListAdapter : DataBindAdapter<Image, ItemBinding, FileListAda
 			binding.imageView.load(currentList[position].uri) {
 				placeholder(R.drawable.list_ic_twotone_folder)
 			}
-			ViewCompat.setTransitionName(binding.imageView, "imageView_$position")
-			binding.imageView.setOnClickListener {
-				val extras = FragmentNavigatorExtras(it to "imageView_$position")
+			ViewCompat.setTransitionName(binding.root, value.name)
+			binding.root.setOnClickListener {
+				val extras = FragmentNavigatorExtras(it to value.name)
 				listener.invoke(currentList[position], position, extras)
 			}
 		}

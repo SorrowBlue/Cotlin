@@ -19,28 +19,32 @@ internal class FolderListAdapter(context: Context) : DataBindAdapter<Folder, Ite
 	override fun areContentsTheSame(old: Folder, new: Folder) = old == new
 
 	fun add(relativePath: String, image: Image) =
-			currentList.find { it.name == relativePath }?.let { it.child += image }
-					?: kotlin.run { currentList = currentList + Folder(relativePath, image) }
+		currentList.find { it.name == relativePath }?.let { it.child += image }
+			?: kotlin.run { currentList = currentList + Folder(relativePath, image) }
 
-	private lateinit var listener: (folder: Folder, position: Int, extras: FragmentNavigator.Extras) -> Unit
+	private lateinit var listener: (folder: Folder, transitionName: String, extras: FragmentNavigator.Extras) -> Unit
 	private val blurTransformation = BlurTransformation(context, 2f, 2f)
 
-	inner class ViewHolder(parent: ViewGroup) : DataBindAdapter.ViewHolder<Folder, ItemBinding>(parent, R.layout.list_recycler_view_item_folder) {
+	inner class ViewHolder(parent: ViewGroup) : DataBindAdapter.ViewHolder<Folder, ItemBinding>(
+		parent,
+		R.layout.list_recycler_view_item_folder
+	) {
 		override fun bind(value: Folder, position: Int) {
-			ViewCompat.setTransitionName(binding.imageView, "folder_imageView_$position")
+			val transitionName = "folder_image_$position"
+			ViewCompat.setTransitionName(binding.root, transitionName)
 			binding.imageView.load(value.child.firstOrNull()?.uri) {
 				transformations(blurTransformation)
 			}
 			binding.name.text = value.name
 			binding.textView2.text = value.child.size.toString()
 			binding.root.setOnClickListener {
-				val extras = FragmentNavigatorExtras(binding.imageView to "folder_imageView_$position")
-				listener.invoke(value, position, extras)
+				val extras = FragmentNavigatorExtras(it to transitionName)
+				listener.invoke(value, transitionName, extras)
 			}
 		}
 	}
 
-	fun setOnClickListener(listener: (folder: Folder, position: Int, extras: FragmentNavigator.Extras) -> Unit) {
+	fun setOnClickListener(listener: (folder: Folder, transitionName: String, extras: FragmentNavigator.Extras) -> Unit) {
 		this.listener = listener
 	}
 }

@@ -7,6 +7,7 @@ android {
 }
 dependencies {
 	api(Libs.material)
+	api(Libs.transition)
 	api(Libs.constraintlayout)
 	api(Libs.`navigation-fragment-ktx`)
 	api(Libs.`navigation-ui-ktx`)

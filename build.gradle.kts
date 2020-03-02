@@ -20,6 +20,7 @@ allprojects {
 	repositories {
 		google()
 		jcenter()
+		maven(url = "https://jitpack.io")
 	}
 }
 subprojects {
@@ -58,6 +59,7 @@ subprojects {
 		`android-library`
 	}
 	`kotlin-android`
+	`kotlin-android-extensions`
 	`kotlin-kapt`
 	apply(plugin = "androidx.navigation.safeargs.kotlin")
 
