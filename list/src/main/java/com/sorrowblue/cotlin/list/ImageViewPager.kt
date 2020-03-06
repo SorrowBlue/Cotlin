@@ -1,8 +1,10 @@
 package com.sorrowblue.cotlin.list
 
+import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
-import coil.api.load
+import androidx.exifinterface.media.ExifInterface
+import com.davemorrissey.labs.subscaleview.ImageSource
 import com.sorrowblue.cotlin.list.databinding.ImageViewPagerItemMainBinding
 import com.sorrowblue.cotlin.ui.recyclerview.DataBindAdapter
 
@@ -15,16 +17,33 @@ internal class ImagePagerAdapter :
 			R.layout.image_view_pager_item_main
 		) {
 		override fun bind(value: Image, position: Int) {
-			binding.imageView.load(value.uri) {
-				if (rot?.first == position) {
-					this.listener { data, source ->
-						binding.imageView.setRotationTo(rot!!.second.toFloat())
-					}
-				}
-			}
+			binding.imageView.setImage(ImageSource.uri(value.uri))
 			ViewCompat.setTransitionName(binding.imageView, value.name)
+			binding.root.context.contentResolver.openInputStream(value.uri)?.use {
+				val exif = ExifInterface(it)
+				Log.d(
+					javaClass.simpleName, """
+					Camera: ${exif.getAttribute(ExifInterface.TAG_MODEL)}
+					TAG_EXPOSURE_TIME: ${exif.getAttribute(ExifInterface.TAG_EXPOSURE_TIME)}
+					f/${exif.getAttributeDouble(ExifInterface.TAG_APERTURE_VALUE, -1.0).convertF()}
+					ISO: ${exif.getAttributeDouble(
+						ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
+						-1.0
+					)}
+					flash: ${exif.getAttributeDouble(ExifInterface.TAG_FLASH, -1.0)}
+					orientation: ${exif.getAttribute(ExifInterface.TAG_ORIENTATION)}
+					make: ${exif.getAttribute(ExifInterface.TAG_MAKE)}
+				""".trimIndent()
+				)
+			}
+
+			binding.imageView.setOnClickListener {
+				onClick.invoke()
+			}
 		}
 	}
+
+	lateinit var onClick: () -> Unit
 
 	var rot: Pair<Int, Int>? = null
 
@@ -41,4 +60,27 @@ internal class ImagePagerAdapter :
 		rot = pos to r
 		notifyItemChanged(pos)
 	}
+}
+
+
+fun Double.convertF() = when {
+	this < 0.707 -> 0.5
+	this < 1.0 -> 0.70
+	this < 1.414 -> 1.0
+	this < 2.0 -> 1.4
+	this < 2.828 -> 2.0
+	this < 4.0 -> 2.8
+	this < 5.657 -> 4
+	this < 8.0 -> 5.6
+	this < 11.31 -> 8.0
+	this < 16.0 -> 11.0
+	this < 22.62 -> 16.0
+	this < 32.0 -> 22
+	this < 45.25 -> 32.0
+	this < 64.0 -> 45.0
+	this < 90.51 -> 64.0
+	this < 128.0 -> 90.0
+	this < 181.02 -> 128.0
+	this < 256.0 -> 180.0
+	else -> 256.0
 }

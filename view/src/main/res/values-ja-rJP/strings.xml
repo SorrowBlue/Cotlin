@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="image_label_delete">削除</string>
+	<string name="image_label_share">共有</string>
+	<string name="image_label_edit">編集</string>
+	<string name="image_label_favorite">お気に入り</string>
+</resources>

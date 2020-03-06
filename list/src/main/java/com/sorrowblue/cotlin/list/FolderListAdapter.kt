@@ -3,6 +3,7 @@ package com.sorrowblue.cotlin.list
 import android.content.Context
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import coil.api.load
@@ -10,7 +11,8 @@ import coil.transform.BlurTransformation
 import com.sorrowblue.cotlin.ui.recyclerview.DataBindAdapter
 import com.sorrowblue.cotlin.list.databinding.ListRecyclerViewItemFolderBinding as ItemBinding
 
-internal class FolderListAdapter(context: Context) : DataBindAdapter<Folder, ItemBinding, FolderListAdapter.ViewHolder>() {
+internal class FolderListAdapter(context: Context) :
+	DataBindAdapter<Folder, ItemBinding, FolderListAdapter.ViewHolder>() {
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent)
 
@@ -22,7 +24,6 @@ internal class FolderListAdapter(context: Context) : DataBindAdapter<Folder, Ite
 		currentList.find { it.name == relativePath }?.let { it.child += image }
 			?: kotlin.run { currentList = currentList + Folder(relativePath, image) }
 
-	private lateinit var listener: (folder: Folder, transitionName: String, extras: FragmentNavigator.Extras) -> Unit
 	private val blurTransformation = BlurTransformation(context, 2f, 2f)
 
 	inner class ViewHolder(parent: ViewGroup) : DataBindAdapter.ViewHolder<Folder, ItemBinding>(
@@ -30,21 +31,20 @@ internal class FolderListAdapter(context: Context) : DataBindAdapter<Folder, Ite
 		R.layout.list_recycler_view_item_folder
 	) {
 		override fun bind(value: Folder, position: Int) {
-			val transitionName = "folder_image_$position"
-			ViewCompat.setTransitionName(binding.root, transitionName)
+			ViewCompat.setTransitionName(binding.root, "folder_image_$position")
 			binding.imageView.load(value.child.firstOrNull()?.uri) {
 				transformations(blurTransformation)
 			}
 			binding.name.text = value.name
 			binding.textView2.text = value.child.size.toString()
 			binding.root.setOnClickListener {
-				val extras = FragmentNavigatorExtras(it to transitionName)
-				listener.invoke(value, transitionName, extras)
+				binding.root.findNavController().navigate(
+					FolderListFragmentDirections.actionFolderListFragmentToFileListFragment(
+						value,
+						it.transitionName
+					), FragmentNavigatorExtras(it to it.transitionName)
+				)
 			}
 		}
-	}
-
-	fun setOnClickListener(listener: (folder: Folder, transitionName: String, extras: FragmentNavigator.Extras) -> Unit) {
-		this.listener = listener
 	}
 }

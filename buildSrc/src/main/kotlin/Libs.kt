@@ -24,17 +24,17 @@ object Libs {
 	val `kotlin-serialization` = kotlin("serialization", kotlin)
 	val `kotlinx-serialization-runtime` = kotlinx("serialization-runtime", "0.13.0")
 
-	const val appcompat = "androidx.appcompat:appcompat:1.2.0-alpha02"
-	const val `core-ktx` = "androidx.core:core-ktx:1.3.0-alpha01"
+	const val appcompat = "androidx.appcompat:appcompat:1.2.0-alpha03"
+	const val `core-ktx` = "androidx.core:core-ktx:1.3.0-alpha02"
 	const val `legacy-support-v4` = "androidx.legacy:legacy-support-v4:1.0.0"
-	const val `fragment-ktx` = "androidx.fragment:fragment-ktx:1.2.2"
+	const val `fragment-ktx` = "androidx.fragment:fragment-ktx:1.3.0-alpha01"
 	const val browser = "androidx.browser:browser:1.3.0-alpha01"
 
 	const val `recyclerview-selection` = "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
 	const val material = "com.google.android.material:material:1.2.0-alpha05"
 	const val constraintlayout = "androidx.constraintlayout:constraintlayout:2.0.0-beta4"
 	const val transition = "androidx.transition:transition:1.3.1"
-	const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha03"
+	const val swiperefreshlayout = "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-beta01"
 	const val `preference-ktx` = "androidx.preference:preference-ktx:1.1.0"
 	const val viewpager2 = "androidx.viewpager2:viewpager2:1.0.0"
 

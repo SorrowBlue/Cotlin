@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/image_view_navigation">
+	<fragment
+		android:id="@+id/imageFragment"
+		android:name="com.sorrowblue.cotlin.image.view.ImageFragment"
+		android:label="画像名">
+		<argument
+			android:name="images"
+			app:argType="com.sorrowblue.cotlin.image.view.Image[]" />
+		<argument
+			android:name="position"
+			app:argType="integer" />
+	</fragment>
+</navigation>

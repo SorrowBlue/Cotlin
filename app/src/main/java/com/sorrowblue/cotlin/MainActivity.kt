@@ -1,9 +1,11 @@
 package com.sorrowblue.cotlin
 
 import android.os.Bundle
+import android.transition.TransitionManager
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -11,8 +13,11 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.navigation.NavigationView
+import com.google.android.material.transition.MaterialFade
 import com.sorrowblue.cotlin.databinding.ActivityMainBinding
 import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
+import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
+import com.sorrowblue.cotlin.ui.view.applyNavigationBarPaddingInsetsAndFabSize
 import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsets
 
 class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
@@ -30,7 +35,10 @@ class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		navView.setupWithNavController(navController)
 		contentView.systemUiVisibility = FULL_SCREEN
+		binding.appBarMain.fab.applyNavigationBarBottomMarginInsets()
+		binding.navView.applySystemBarPaddingInsets()
 		binding.appBarMain.appBarLayout.applySystemBarPaddingInsets()
+
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {

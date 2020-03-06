@@ -16,10 +16,14 @@ import androidx.navigation.fragment.findNavController
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.transition.MaterialContainerTransform
+import com.google.android.material.transition.MaterialSharedAxis
 import com.sorrowblue.cotlin.list.FolderListFragmentDirections.Companion.actionFolderListFragmentToFileListFragment
 import com.sorrowblue.cotlin.list.databinding.ListFragmentMainBinding
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.FabAction
+import com.sorrowblue.cotlin.ui.view.applyNavigationBarPaddingInsets
+import com.sorrowblue.cotlin.ui.view.applySystemBarAndToolbarPaddingInsets
+import com.sorrowblue.cotlin.ui.view.applyVerticalInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class FolderListFragment :
@@ -29,14 +33,21 @@ internal class FolderListFragment :
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        sharedElementReturnTransition = MaterialContainerTransform(requireContext()).apply {
-            fadeMode = MaterialContainerTransform.FADE_MODE_OUT
-        }
+//        sharedElementReturnTransition = MaterialContainerTransform(requireContext()).apply {
+//            fadeMode = MaterialContainerTransform.FADE_MODE_OUT
+//        }
+
+
+		val backward =  MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  false)
+		enterTransition = backward
+
+		val forward =  MaterialSharedAxis.create(requireContext(),  MaterialSharedAxis.Z,  true)
+		exitTransition = forward
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewLifecycleOwner.lifecycle.addObserver(viewModel)
+		binding.recyclerView.applyVerticalInsets()
         if (checkSelfPermission(requireActivity(), READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
             if (shouldShowRequestPermissionRationale(requireActivity(), READ_EXTERNAL_STORAGE)) {
                 ActivityCompat.requestPermissions(
@@ -63,12 +74,8 @@ internal class FolderListFragment :
     }
 
     private fun init() {
-        binding.viewModel = viewModel
-        viewModel.adapter.setOnClickListener { folder, transitionName, extras ->
-            findNavController().navigate(
-                actionFolderListFragmentToFileListFragment(folder, transitionName), extras
-            )
-        }
+		viewLifecycleOwner.lifecycle.addObserver(viewModel)
+		binding.viewModel = viewModel
     }
 
     override val fabAction: FabAction?

@@ -4,17 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.graphics.Color
+import android.util.Log
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
 import androidx.annotation.LayoutRes
+import androidx.constraintlayout.widget.Guideline
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updatePadding
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.ProcessLifecycleOwner
+import androidx.lifecycle.ViewTreeLifecycleOwner
 import com.sorrowblue.cotlin.ui.R
 import com.google.android.material.R as MaterialR
 
@@ -23,21 +27,19 @@ val View.inflater: LayoutInflater get() = LayoutInflater.from(context)
 fun <T : ViewDataBinding> View.dataBind(): T? = DataBindingUtil.bind(this)
 
 
-val View.lifecycleOwner: LifecycleOwner
-	get() = retrieveLifecycleOwner(context)
+val View.lifecycleOwner: LifecycleOwner?
+	get() = ViewTreeLifecycleOwner.get(this)
 
-private fun retrieveLifecycleOwner(context: Context): LifecycleOwner {
-	return when (context) {
-		is LifecycleOwner -> context
-		is ContextWrapper -> retrieveLifecycleOwner(context.baseContext)
-		else -> ProcessLifecycleOwner.get()
-	}
-}
-
-fun <T : ViewDataBinding> ViewGroup.dataInflate(@LayoutRes layoutId: Int, attachToParent: Boolean = false): T =
+fun <T : ViewDataBinding> ViewGroup.dataInflate(
+	@LayoutRes layoutId: Int,
+	attachToParent: Boolean = false
+): T =
 	DataBindingUtil.inflate(inflater, layoutId, this, attachToParent)
 
-fun <T : ViewDataBinding> LayoutInflater.dataInflate(@LayoutRes layoutId: Int, attachToParent: Boolean = false): T =
+fun <T : ViewDataBinding> LayoutInflater.dataInflate(
+	@LayoutRes layoutId: Int,
+	attachToParent: Boolean = false
+): T =
 	DataBindingUtil.inflate(this, layoutId, null, attachToParent)
 
 fun Int.colorInvert() =
@@ -51,15 +53,38 @@ fun Int.colorInvert() =
 
 fun View.applySystemBarPaddingInsets() {
 	this.doOnApplyWindowInsets { view, insets, padding, _ ->
-		view.updatePadding(top = padding.top + insets.systemWindowInsetTop)
+		view.updatePadding(
+			top = padding.top + insets.systemWindowInsetTop,
+			left = insets.systemWindowInsetLeft,
+			right = insets.systemWindowInsetRight
+		)
 	}
 }
 
-fun View.applyNavigationBarPaddingInsets() {
+fun View.applySystemBarAndToolbarPaddingInsets() {
 	this.doOnApplyWindowInsets { view, insets, padding, _ ->
-		view.updatePadding(bottom = padding.bottom + insets.systemWindowInsetBottom)
+		Log.d("APPAPP", "${context.resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size)}")
+		view.updatePadding(
+			top = padding.top + insets.systemWindowInsetTop + context.resources.getDimensionPixelSize(com.google.android.material.R.dimen.action_bar_size),
+			left = insets.systemWindowInsetLeft,
+			right = insets.systemWindowInsetRight
+		)
 	}
 }
+
+fun View.applyNavigationBarPaddingInsets() =
+	doOnApplyWindowInsets { view, insets, padding, _ ->
+		view.updatePadding(
+			bottom = padding.bottom + insets.systemWindowInsetBottom,
+			left = insets.systemWindowInsetLeft,
+			right = insets.systemWindowInsetRight
+		)
+	}
+
+fun Guideline.applyNavigationBarPaddingInsets() =
+	doOnApplyWindowInsets { view, insets, padding, _ ->
+		this.setGuidelineEnd(insets.systemWindowInsetBottom)
+	}
 
 @SuppressLint("PrivateResource")
 fun View.applyNavigationBarPaddingInsetsAndFabSize() {
@@ -69,7 +94,9 @@ fun View.applyNavigationBarPaddingInsetsAndFabSize() {
 				MaterialR.dimen.design_fab_size_normal
 			) + context.resources.getDimensionPixelSize(
 				R.dimen.margin
-			)
+			),
+			left = insets.systemWindowInsetLeft,
+			right = insets.systemWindowInsetRight
 		)
 	}
 }
@@ -78,7 +105,9 @@ fun View.applyNavigationBarBottomMarginInsets() {
 	doOnApplyWindowInsets { view, insets, _, margin ->
 		view.updateLayoutParams<ViewGroup.MarginLayoutParams> {
 			setMargins(
-				margin.left, margin.top, margin.right,
+				margin.left + insets.systemWindowInsetLeft,
+				margin.top,
+				margin.right + insets.systemWindowInsetRight,
 				margin.bottom + insets.systemWindowInsetBottom
 			)
 		}
@@ -88,7 +117,11 @@ fun View.applyNavigationBarBottomMarginInsets() {
 fun View.applyVerticalInsets() {
 	doOnApplyWindowInsets { view, windowInsets, initialPadding, _ ->
 		view.updatePadding(
-			top = initialPadding.top + windowInsets.systemWindowInsetTop,
+			top = initialPadding.top + windowInsets.systemWindowInsetTop + with(TypedValue().also {context.theme.resolveAttribute(android.R.attr.actionBarSize, it, true)}) {
+				TypedValue.complexToDimensionPixelSize(this.data, resources.displayMetrics)
+			},
+			left = windowInsets.systemWindowInsetLeft,
+			right = windowInsets.systemWindowInsetRight,
 			bottom = initialPadding.bottom + windowInsets.systemWindowInsetBottom
 		)
 	}
