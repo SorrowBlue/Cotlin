@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<ListPreference
+		android:defaultValue="@string/settings_label_follow_system"
+		android:entries="@array/settings_dark_mode"
+		app:useSimpleSummaryProvider="true"
+		android:entryValues="@array/settings_dark_mode_value"
+		android:key="@string/settings_key_dark_mode"
+		android:title="@string/settings_label_dark_mode" />
+</PreferenceScreen>

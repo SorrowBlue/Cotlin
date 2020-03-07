@@ -19,7 +19,10 @@
             <option value="$PROJECT_DIR$/domains" />
             <option value="$PROJECT_DIR$/domains/folder" />
             <option value="$PROJECT_DIR$/domains/image" />
+            <option value="$PROJECT_DIR$/futures" />
+            <option value="$PROJECT_DIR$/futures/settings" />
             <option value="$PROJECT_DIR$/list" />
+            <option value="$PROJECT_DIR$/modules" />
             <option value="$PROJECT_DIR$/ui" />
             <option value="$PROJECT_DIR$/view" />
           </set>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array name="settings_dark_mode">
+		<item>@string/settings_label_auto_battery</item>
+		<item>@string/settings_label_follow_system</item>
+		<item>@string/settings_label_no</item>
+		<item>@string/settings_label_yes</item>
+	</string-array>
+
+	<string-array name="settings_dark_mode_value">
+		<item>@string/settings_value_auto_battery</item>
+		<item>@string/settings_value_follow_system</item>
+		<item>@string/settings_value_no</item>
+		<item>@string/settings_value_yes</item>
+	</string-array>
+</resources>

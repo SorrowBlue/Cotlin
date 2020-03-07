@@ -15,7 +15,6 @@ import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.appBarLayout
 import com.sorrowblue.cotlin.ui.fragment.toolbar
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarPaddingInsets
-import com.sorrowblue.cotlin.ui.view.applySystemBarAndToolbarPaddingInsets
 
 internal class ImageFragment :
 	DataBindingFragment<ImageFragmentMainBinding>(R.layout.image_fragment_main) {

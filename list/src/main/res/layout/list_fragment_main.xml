@@ -15,7 +15,8 @@
 		isRefreshing="@{viewModel.isLoading}"
 		onRefresh="@{() -> viewModel.refresh()}"
 		android:layout_width="match_parent"
-		android:layout_height="match_parent">
+		android:layout_height="match_parent"
+		app:swipeRefreshLayoutProgressSpinnerBackgroundColor="@color/color_primary">
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recyclerView"

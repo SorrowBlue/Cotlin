@@ -1,48 +1,60 @@
 package com.sorrowblue.cotlin
 
+import android.Manifest
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
-import android.transition.TransitionManager
+import android.provider.Settings
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.core.content.ContextCompat
+import androidx.navigation.NavGraph
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.navigation.NavigationView
-import com.google.android.material.transition.MaterialFade
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sorrowblue.cotlin.databinding.ActivityMainBinding
 import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
-import com.sorrowblue.cotlin.ui.view.applyNavigationBarPaddingInsetsAndFabSize
 import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsets
 
-class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
+internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 	private lateinit var appBarConfiguration: AppBarConfiguration
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
+		if (ContextCompat.checkSelfPermission(
+				this,
+				Manifest.permission.READ_EXTERNAL_STORAGE
+			) != PackageManager.PERMISSION_GRANTED
+		) {
+			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+				ActivityCompat.requestPermissions(
+					this,
+					arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
+					100
+				)
+			} else {
+				val navController = findNavController(R.id.nav_host_fragment)
+				navController.graph = navController.graph.apply { startDestination = R.id.permissionFragment }
+			}
+		} else {
+		}
 		setSupportActionBar(binding.appBarMain.toolbar)
-		val drawerLayout: DrawerLayout = binding.drawerLayout
-		val navView: NavigationView = binding.navView
-		navView.getHeaderView(0).applySystemBarPaddingInsets()
+		applyFullScreen()
 		val navController = findNavController(R.id.nav_host_fragment)
-		appBarConfiguration = AppBarConfiguration(setOf(R.id.folderListFragment), drawerLayout)
+		appBarConfiguration =
+			AppBarConfiguration(setOf(R.id.folderListFragment), binding.drawerLayout)
 		setupActionBarWithNavController(navController, appBarConfiguration)
-		navView.setupWithNavController(navController)
-		contentView.systemUiVisibility = FULL_SCREEN
-		binding.appBarMain.fab.applyNavigationBarBottomMarginInsets()
-		binding.navView.applySystemBarPaddingInsets()
-		binding.appBarMain.appBarLayout.applySystemBarPaddingInsets()
-
+		binding.navView.setupWithNavController(navController)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		menuInflater.inflate(R.menu.main, menu)
 		return true
 	}
@@ -53,6 +65,13 @@ class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_
 	}
 
 	private val contentView get() = ActivityCompat.requireViewById<View>(this, android.R.id.content)
+
+	private fun applyFullScreen() {
+		contentView.systemUiVisibility = FULL_SCREEN
+		binding.navView.applySystemBarPaddingInsets()
+		binding.appBarMain.fab.applyNavigationBarBottomMarginInsets()
+		binding.appBarMain.appBarLayout.applySystemBarPaddingInsets()
+	}
 }
 
 const val FULL_SCREEN =

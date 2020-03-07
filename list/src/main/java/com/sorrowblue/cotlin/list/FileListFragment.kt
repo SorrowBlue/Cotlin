@@ -5,14 +5,11 @@ import android.view.View
 import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.google.android.material.transition.MaterialContainerTransform
 import com.google.android.material.transition.MaterialSharedAxis
 import com.sorrowblue.cotlin.list.FileListFragmentDirections.Companion.actionFileListFragmentToImageFragment
 import com.sorrowblue.cotlin.list.databinding.ListFragmentFileBinding
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.toolbar
-import com.sorrowblue.cotlin.ui.view.applyNavigationBarPaddingInsets
-import com.sorrowblue.cotlin.ui.view.applySystemBarAndToolbarPaddingInsets
 import com.sorrowblue.cotlin.ui.view.applyVerticalInsets
 
 internal class FileListFragment :

@@ -38,4 +38,5 @@ dependencies {
 	implementation(Libs.`legacy-support-v4`)
 	implementation(project(Modules.ui))
 	implementation(project(Modules.list))
+	implementation(project(Modules.`futures-settings`))
 }

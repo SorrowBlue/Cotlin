@@ -5,4 +5,9 @@
 	app:startDestination="@id/list_navigation">
 
 	<include app:graph="@navigation/list_navigation" />
+	<include app:graph="@navigation/settings_navigation" />
+	<fragment
+		android:id="@+id/permissionFragment"
+		android:name="com.sorrowblue.cotlin.PermissionFragment"
+		android:label="PermissionFragment" />
 </navigation>

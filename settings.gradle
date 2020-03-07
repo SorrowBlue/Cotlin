@@ -1,9 +1,0 @@
-include ':domains:folder'
-include ':domains:image'
-include ':data:image'
-include ':data:core'
-include ':view'
-include ':list'
-include ':ui'
-include ':app'
-rootProject.name = "Cotlin"

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="settings_label_dark_mode">Dark theme</string>
+	<string name="settings_key_dark_mode">settings.dark_theme</string>
+
+	<string name="settings_label_follow_system">システムの設定</string>
+	<string name="settings_label_auto_battery">バッテリー残量に基づく</string>
+	<string name="settings_label_yes">On</string>
+	<string name="settings_label_no">OFF</string>
+
+	<string name="settings_value_follow_system">FOLLOW_SYSTEM</string>
+	<string name="settings_value_auto_battery">AUTO_BATTERY</string>
+	<string name="settings_value_yes">YES</string>
+	<string name="settings_value_no">NO</string>
+	<string name="settings_label">Settings</string>
+</resources>
