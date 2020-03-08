@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/domains/folder" />
             <option value="$PROJECT_DIR$/domains/image" />
             <option value="$PROJECT_DIR$/futures" />
+            <option value="$PROJECT_DIR$/futures/permission" />
             <option value="$PROJECT_DIR$/futures/settings" />
             <option value="$PROJECT_DIR$/list" />
             <option value="$PROJECT_DIR$/modules" />

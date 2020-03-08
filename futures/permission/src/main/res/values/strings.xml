@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="permission_label_to_settings">Go to settings</string>
+	<string name="permission_label_permission">Permission</string>
+	<string name="permission_msg_should_request_permission">To continue, allow Cotlin to access your storage.</string>
+</resources>

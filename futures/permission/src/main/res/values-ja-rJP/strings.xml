@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="permission_label_to_settings">設定に移動</string>
+	<string name="permission_label_permission">許可</string>
+	<string name="permission_msg_should_request_permission">続行するには、Cotlinにストレージへのアクセスを許可してください。</string>
+</resources>

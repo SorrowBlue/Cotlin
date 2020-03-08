@@ -10,4 +10,5 @@ object Modules {
 	const val `domain-folder` = ":domains:folder"
 	const val `data-folder` = ":data:image"
 	const val `futures-settings` = ":futures:settings"
+	const val `futures-permission` = ":futures:permission"
 }

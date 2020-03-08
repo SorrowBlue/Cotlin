@@ -1,22 +1,18 @@
 package com.sorrowblue.cotlin
 
-import android.Manifest
-import android.content.Intent
-import android.content.pm.PackageManager
-import android.net.Uri
+import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
-import android.provider.Settings
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.navigation.NavGraph
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.sorrowblue.cotlin.databinding.ActivityMainBinding
 import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
@@ -28,22 +24,9 @@ internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		if (ContextCompat.checkSelfPermission(
-				this,
-				Manifest.permission.READ_EXTERNAL_STORAGE
-			) != PackageManager.PERMISSION_GRANTED
-		) {
-			if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
-				ActivityCompat.requestPermissions(
-					this,
-					arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE),
-					100
-				)
-			} else {
-				val navController = findNavController(R.id.nav_host_fragment)
-				navController.graph = navController.graph.apply { startDestination = R.id.permissionFragment }
-			}
-		} else {
+		if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+			val navController = findNavController(R.id.nav_host_fragment)
+			navController.navigate(R.id.permission_navigation)
 		}
 		setSupportActionBar(binding.appBarMain.toolbar)
 		applyFullScreen()

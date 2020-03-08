@@ -39,4 +39,5 @@ dependencies {
 	implementation(project(Modules.ui))
 	implementation(project(Modules.list))
 	implementation(project(Modules.`futures-settings`))
+	implementation(project(Modules.`futures-permission`))
 }
