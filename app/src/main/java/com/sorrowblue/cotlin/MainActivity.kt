@@ -32,7 +32,7 @@ internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.
 		applyFullScreen()
 		val navController = findNavController(R.id.nav_host_fragment)
 		appBarConfiguration =
-			AppBarConfiguration(setOf(R.id.folderListFragment), binding.drawerLayout)
+			AppBarConfiguration(setOf(R.id.folderFragment), binding.drawerLayout)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		binding.navView.setupWithNavController(navController)
 	}

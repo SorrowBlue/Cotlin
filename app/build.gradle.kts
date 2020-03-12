@@ -37,7 +37,9 @@ dependencies {
 	implementation(Libs.appcompat)
 	implementation(Libs.`legacy-support-v4`)
 	implementation(project(Modules.ui))
+	implementation(project(Modules.modules))
 	implementation(project(Modules.list))
+	implementation(project(Modules.`futures-folder`))
 	implementation(project(Modules.`futures-settings`))
 	implementation(project(Modules.`futures-permission`))
 }

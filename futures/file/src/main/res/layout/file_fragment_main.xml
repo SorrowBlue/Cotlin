@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<import type="com.sorrowblue.cotlin.ui.recyclerview.GridDividerDecoration" />
+
+		<variable
+			name="viewModel"
+			type="com.sorrowblue.cotlin.futures.file.FileViewModel" />
+	</data>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerView"
+			itemDecoration="@{GridDividerDecoration.GRID}"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clipToPadding="false"
+			android:orientation="vertical"
+			app:adapter="@{viewModel.adapter}"
+			app:layoutManager="androidx.recyclerview.widget.StaggeredGridLayoutManager"
+			app:spanCount="3"
+			tools:itemCount="40"
+			tools:listitem="@layout/file_recycler_view_item_main" />
+
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

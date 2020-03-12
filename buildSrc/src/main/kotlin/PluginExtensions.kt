@@ -27,7 +27,7 @@ val DependencyHandler.`navigation-safe-args-gradle-plugin`
 	get() =
 		"androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.navigation}"
 
-val DependencyHandler.`oss-licenses-plugin` get() = "com.google.android.gms:oss-licenses-plugin:0.10.1"
+val DependencyHandler.`oss-licenses-plugin` get() = "com.google.android.gms:oss-licenses-plugin:0.10.2"
 
 val PluginDependenciesSpec.`ben-manes-versions` get() = id("com.github.ben-manes.versions") version "0.28.0"
 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
+
+	<data>
+
+		<variable
+			name="viewModel"
+			type="com.sorrowblue.cotlin.futures.folder.FolderViewModel" />
+	</data>
+
+	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		isRefreshing="@{viewModel.isLoading}"
+		onRefresh="@{() -> viewModel.refresh()}"
+		android:layout_width="match_parent"
+		android:layout_height="match_parent">
+
+		<androidx.recyclerview.widget.RecyclerView
+			android:id="@+id/recyclerView"
+			itemDecoration="@{0}"
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:clipToPadding="false"
+			android:orientation="vertical"
+			app:adapter="@{viewModel.adapter}"
+			app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+			app:spanCount="2"
+			tools:itemCount="7"
+			tools:listitem="@layout/folder_recycler_view_item_main" />
+	</androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+</layout>

@@ -18,6 +18,7 @@ dependencies {
 	api(Libs.`koin-android`)
 	api(Libs.`koin-androidx-viewmodel`)
 	api(Libs.`fragment-ktx`)
+	implementation(Libs.swiperefreshlayout)
 	api(Libs.`kotlinx-coroutines-android`)
 	implementation(Libs.`lifecycle-process`)
 }

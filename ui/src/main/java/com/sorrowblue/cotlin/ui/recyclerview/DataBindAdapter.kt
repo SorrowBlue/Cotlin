@@ -11,7 +11,7 @@ import kotlin.properties.Delegates
 
 abstract class DataBindAdapter<T, B : ViewDataBinding, VH : DataBindAdapter.ViewHolder<T, B>> :
 	RecyclerView.Adapter<VH>() {
-	protected var currentList: List<T> by Delegates.observable(emptyList()) { _, old, new ->
+	var currentList: List<T> by Delegates.observable(emptyList()) { _, old, new ->
 		DiffUtil.calculateDiff(
 			DiffCallback(old, new)
 		).dispatchUpdatesTo(this)

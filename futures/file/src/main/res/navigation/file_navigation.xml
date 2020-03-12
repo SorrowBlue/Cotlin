@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:id="@+id/file_navigation"
+	app:startDestination="@id/fileFragment"
+	tools:ignore="UnusedNavigation">
+
+	<fragment
+		tools:layout="@layout/file_fragment_main"
+		android:id="@+id/fileFragment"
+		android:name="com.sorrowblue.cotlin.futures.file.FileFragment"
+		android:label="FileFragment" >
+		<argument
+			android:name="folder"
+			app:argType="com.sorrowblue.cotlin.domains.folder.Folder" />
+		<argument
+			android:name="transitionName"
+			app:argType="string" />
+	</fragment>
+</navigation>

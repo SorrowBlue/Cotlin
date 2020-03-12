@@ -15,11 +15,15 @@
             <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/data" />
             <option value="$PROJECT_DIR$/data/core" />
+            <option value="$PROJECT_DIR$/data/folder" />
             <option value="$PROJECT_DIR$/data/image" />
             <option value="$PROJECT_DIR$/domains" />
             <option value="$PROJECT_DIR$/domains/folder" />
             <option value="$PROJECT_DIR$/domains/image" />
             <option value="$PROJECT_DIR$/futures" />
+            <option value="$PROJECT_DIR$/futures/file" />
+            <option value="$PROJECT_DIR$/futures/folder" />
+            <option value="$PROJECT_DIR$/futures/image" />
             <option value="$PROJECT_DIR$/futures/permission" />
             <option value="$PROJECT_DIR$/futures/settings" />
             <option value="$PROJECT_DIR$/list" />

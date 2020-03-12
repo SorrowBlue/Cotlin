@@ -2,9 +2,10 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/mobile_navigation"
-	app:startDestination="@id/list_navigation">
+	app:startDestination="@id/folder_navigation">
 
 	<include app:graph="@navigation/list_navigation" />
+	<include app:graph="@navigation/folder_navigation" />
 	<include app:graph="@navigation/settings_navigation" />
 	<include app:graph="@navigation/permission_navigation" />
 </navigation>
