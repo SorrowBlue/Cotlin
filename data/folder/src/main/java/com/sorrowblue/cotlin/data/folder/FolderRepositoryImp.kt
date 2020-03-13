@@ -43,7 +43,6 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 				val name = api.name ?: continue
 				val size = api.size ?: continue
 				val contentUri = api.contentUri ?: continue
-				val relativePath = api.relativePath(contentUri) ?: continue
 				val image = Image(
 					contentUri,
 					name,
@@ -128,7 +127,7 @@ class ImageApi(private val contentResolver: ContentResolver, private val cursor:
 
 	private val id get() = cursor.getLongOrNull(idColumn)
 	val name get() = cursor.getStringOrNull(nameColumn)
-	val size get() = cursor.getLong(sizeColumn)
+	val size get() = cursor.getLongOrNull(sizeColumn)
 	val contentUri
 		get() = id?.let {
 			ContentUris.withAppendedId(Media.EXTERNAL_CONTENT_URI, it)

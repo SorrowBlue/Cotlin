@@ -23,7 +23,7 @@ internal class FolderAdapter : DataBindAdapter<Folder, ItemBinding, FolderAdapte
 			ViewCompat.setTransitionName(binding.root, "folder_$position")
 			binding.root.setOnClickListener {
 				binding.root.findNavController().navigate(
-					FolderFragmentDirections.actionFolderfragmentToFileNavigation().actionId,
+					FolderFragmentDirections.actionToFileNavigation().actionId,
 					FileFragmentArgs(value, it.transitionName).toBundle(),
 					null,
 					FragmentNavigatorExtras(it to it.transitionName)

@@ -1,8 +1,9 @@
 package com.sorrowblue.cotlin.futures.file
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.View
-import androidx.core.view.ViewCompat
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialSharedAxis
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
@@ -16,6 +17,10 @@ internal class FileFragment : DataBindingFragment<FragmentBinding>(R.layout.file
 
 	private val args: FileFragmentArgs by navArgs()
 	private val viewModel: FileViewModel by viewModel { parametersOf(args.folder) }
+
+	override val fabAction = R.drawable.ic_twotone_photo_camera to {
+		startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

@@ -5,10 +5,14 @@
 
 	<data>
 
+		<variable
+			name="uiViewModel"
+			type="com.sorrowblue.cotlin.ui.UiViewModel" />
 	</data>
 
 	<androidx.drawerlayout.widget.DrawerLayout
 		android:id="@+id/drawer_layout"
+		drawerLockMode="@{uiViewModel.drawerLockMode}"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
 		tools:openDrawer="start">
@@ -17,7 +21,8 @@
 			android:id="@+id/app_bar_main"
 			layout="@layout/app_bar_main"
 			android:layout_width="match_parent"
-			android:layout_height="match_parent" />
+			android:layout_height="match_parent"
+			app:uiViewModel="@{uiViewModel}" />
 
 		<com.google.android.material.navigation.NavigationView
 			android:id="@+id/nav_view"

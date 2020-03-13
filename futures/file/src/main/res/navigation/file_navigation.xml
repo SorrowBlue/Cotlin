@@ -17,5 +17,10 @@
 		<argument
 			android:name="transitionName"
 			app:argType="string" />
+		<action
+			android:id="@+id/action_to_image_navigation"
+			app:destination="@id/image_navigation"
+			app:launchSingleTop="true" />
 	</fragment>
+	<include app:graph="@navigation/image_navigation" />
 </navigation>

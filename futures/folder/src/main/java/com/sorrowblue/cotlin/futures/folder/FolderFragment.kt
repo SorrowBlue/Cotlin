@@ -15,10 +15,9 @@ internal class FolderFragment :
 
 	private val viewModel: FolderViewModel by viewModel()
 
-	override val fabAction
-		get() = R.drawable.ic_twotone_photo_camera to {
-			startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
-		}
+	override val fabAction = R.drawable.ic_twotone_photo_camera to {
+		startActivity(Intent(MediaStore.INTENT_ACTION_STILL_IMAGE_CAMERA))
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)

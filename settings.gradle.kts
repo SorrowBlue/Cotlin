@@ -1,6 +1,6 @@
 val excludeFolder = setOf("build", "src", "schemas", "libs")
 rootProject.name = "Cotlin"
-include(":app", ":modules", ":ui", ":list", ":view")
+include(":app", ":modules", ":ui")
 listOf("futures", "domains", "data").forEach { libRoot ->
 	file("/$libRoot").listFiles()?.forEach { baseModule ->
 		include(":$libRoot:${baseModule.name}")

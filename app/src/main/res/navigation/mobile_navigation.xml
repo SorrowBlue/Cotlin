@@ -4,7 +4,6 @@
 	android:id="@+id/mobile_navigation"
 	app:startDestination="@id/folder_navigation">
 
-	<include app:graph="@navigation/list_navigation" />
 	<include app:graph="@navigation/folder_navigation" />
 	<include app:graph="@navigation/settings_navigation" />
 	<include app:graph="@navigation/permission_navigation" />

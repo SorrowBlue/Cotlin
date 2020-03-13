@@ -3,11 +3,13 @@ package com.sorrowblue.cotlin.ui.view
 import android.annotation.SuppressLint
 import android.content.res.Resources
 import android.graphics.Color
+import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowInsets
+import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.LayoutRes
 import androidx.core.view.updateLayoutParams

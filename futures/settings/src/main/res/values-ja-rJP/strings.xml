@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="settings_label">設定</string>
+	<string name="settings_label_dark_mode">ダークモード</string>
+	<string name="settings_label_follow_system">システムの設定</string>
+	<string name="settings_label_auto_battery">バッテリー残量に基づく</string>
+</resources>

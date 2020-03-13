@@ -12,7 +12,7 @@
 		android:name="com.sorrowblue.cotlin.futures.folder.FolderFragment"
 		android:label="@string/app_name" >
 		<action
-			android:id="@+id/action_folderfragment_to_file_navigation"
+			android:id="@+id/action_to_file_navigation"
 			app:destination="@id/file_navigation"
 			app:launchSingleTop="true" />
 	</fragment>

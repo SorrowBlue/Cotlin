@@ -6,6 +6,7 @@ import androidx.navigation.findNavController
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.sorrowblue.cotlin.domains.image.Image
+import com.sorrowblue.cotlin.futures.image.ImageFragmentArgs
 import com.sorrowblue.cotlin.ui.recyclerview.DataBindAdapter
 import com.sorrowblue.cotlin.futures.file.databinding.FileRecyclerViewItemMainBinding as ItemBinding
 
@@ -33,8 +34,12 @@ internal class FileAdapter : DataBindAdapter<Image, ItemBinding, FileAdapter.Vie
 			ViewCompat.setTransitionName(binding.root, value.name)
 			binding.root.setOnClickListener {
 				val extras = FragmentNavigatorExtras(it to it.transitionName)
-				it.findNavController()
-//				listener.invoke(currentList[position], position, extras)
+				it.findNavController().navigate(
+					FileFragmentDirections.actionToImageNavigation().actionId,
+					ImageFragmentArgs(currentList.toTypedArray(), position).toBundle(),
+					null,
+					extras
+				)
 			}
 			binding.executePendingBindings()
 		}

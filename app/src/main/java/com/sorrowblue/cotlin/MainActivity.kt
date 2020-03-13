@@ -1,30 +1,37 @@
 package com.sorrowblue.cotlin
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
-import android.content.pm.PackageManager.PERMISSION_GRANTED
 import android.os.Bundle
 import android.view.Menu
 import android.view.View
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.navigation.NavOptions
+import androidx.core.content.PermissionChecker
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.sorrowblue.cotlin.databinding.ActivityMainBinding
+import com.sorrowblue.cotlin.ui.UiViewModel
 import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
 import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsets
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 	private lateinit var appBarConfiguration: AppBarConfiguration
+	private val uiViewModel: UiViewModel by viewModel()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		if (ContextCompat.checkSelfPermission(this, READ_EXTERNAL_STORAGE) != PERMISSION_GRANTED) {
+		binding.uiViewModel = uiViewModel
+		binding.lifecycleOwner =  this
+		if (PermissionChecker.checkSelfPermission(
+				this,
+				READ_EXTERNAL_STORAGE
+			) != PermissionChecker.PERMISSION_GRANTED
+		) {
 			val navController = findNavController(R.id.nav_host_fragment)
 			navController.navigate(R.id.permission_navigation)
 		}
@@ -51,7 +58,7 @@ internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.
 
 	private fun applyFullScreen() {
 		contentView.systemUiVisibility = FULL_SCREEN
-		binding.navView.applySystemBarPaddingInsets()
+		binding.navView.getHeaderView(0).applySystemBarPaddingInsets()
 		binding.appBarMain.fab.applyNavigationBarBottomMarginInsets()
 		binding.appBarMain.appBarLayout.applySystemBarPaddingInsets()
 	}

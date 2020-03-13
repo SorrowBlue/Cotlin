@@ -42,8 +42,13 @@ object Libs {
 
 	const val coil = "io.coil-kt:coil:${Versions.coil}"
 	const val `coil-svg` = "io.coil-kt:coil-svg:${Versions.coil}"
+
 	const val `koin-android` = "org.koin:koin-android:$koin"
 	const val `koin-androidx-viewmodel` = "org.koin:koin-androidx-viewmodel:$koin"
+
+	const val photoView = "com.github.chrisbanes:PhotoView:2.3.0"
+	const val `subsampling-scale-image-view` =
+		"com.davemorrissey.labs:subsampling-scale-image-view:3.10.0"
 
 	/**
 	 * @link https://developer.android.com/jetpack/androidx/releases/navigation

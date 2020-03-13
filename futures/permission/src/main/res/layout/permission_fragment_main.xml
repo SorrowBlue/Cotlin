@@ -4,6 +4,9 @@
 
 	<data>
 
+		<variable
+			name="viewModel"
+			type="com.sorrowblue.cotlin.futures.permission.PermissionViewModel" />
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -29,7 +32,8 @@
 			android:id="@+id/action_button"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:text="@string/permission_label_to_settings"
+			android:onClick="@{() -> viewModel.shouldShowDetails ? viewModel.requestPermission.invoke() : viewModel.goToSettings.invoke()}"
+			android:text="@{viewModel.shouldShowDetails ? @string/permission_label_permission : @string/permission_label_to_settings}"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintStart_toStartOf="parent"

@@ -5,6 +5,8 @@
 
 	<data>
 
+		<import type="com.sorrowblue.cotlin.ui.recyclerview.GridDividerDecoration" />
+
 		<variable
 			name="viewModel"
 			type="com.sorrowblue.cotlin.futures.folder.FolderViewModel" />
@@ -18,7 +20,7 @@
 
 		<androidx.recyclerview.widget.RecyclerView
 			android:id="@+id/recyclerView"
-			itemDecoration="@{0}"
+			itemDecoration="@{GridDividerDecoration.GRID}"
 			android:layout_width="match_parent"
 			android:layout_height="match_parent"
 			android:clipToPadding="false"

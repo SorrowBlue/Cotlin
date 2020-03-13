@@ -39,7 +39,11 @@ fun <T> NamedDomainObjectContainer<T>.release(configureAction: T.() -> Unit) {
 
 
 fun <T> NamedDomainObjectContainer<T>.debug(configureAction: T.() -> Unit) {
-	getByName("debug") { configureAction(this) }
+	kotlin.runCatching {
+		getByName("debug") { configureAction(this) }
+	}.onFailure {
+		create("debug") { configureAction(this) }
+	}
 }
 
 @Suppress("UnstableApiUsage")

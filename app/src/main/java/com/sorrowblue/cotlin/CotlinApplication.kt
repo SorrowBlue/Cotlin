@@ -3,7 +3,6 @@ package com.sorrowblue.cotlin
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import com.sorrowblue.cotlin.futures.settings.Settings
-import com.sorrowblue.cotlin.list.listModule
 import com.sorrowblue.cotlin.modules.dataModule
 import com.sorrowblue.cotlin.modules.futureModule
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +14,7 @@ class CotlinApplication : Application() {
 		super.onCreate()
 		startKoin {
 			androidContext(this@CotlinApplication)
-			modules(listModule() + dataModule() + futureModule())
+			modules(dataModule() + futureModule())
 		}
 		Settings.applyDarkMode(applicationContext)
 	}
