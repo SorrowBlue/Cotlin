@@ -8,7 +8,6 @@ import android.os.Handler
 import android.provider.MediaStore
 import androidx.lifecycle.*
 import com.sorrowblue.cotlin.domains.folder.FolderRepository
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 internal class FolderViewModel(val adapter: FolderAdapter, private val context: Context, private val repo: FolderRepository) : ViewModel(), LifecycleObserver {

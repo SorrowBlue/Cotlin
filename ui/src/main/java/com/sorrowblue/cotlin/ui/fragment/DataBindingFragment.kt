@@ -73,7 +73,7 @@ class ResultLiveDataDelegate<T : Any?>(private val key: String) :
 	private var _value: MutableLiveData<T>? = null
 
 	private fun initialize(thisRef: Fragment): MutableLiveData<T>? =
-		thisRef.findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData<T>(key)
+		thisRef.findNavController().currentBackStackEntry?.savedStateHandle?.getLiveData(key)
 
 	override fun getValue(thisRef: Fragment, property: KProperty<*>): MutableLiveData<T>? =
 		_value ?: initialize(thisRef).also {

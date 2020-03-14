@@ -14,7 +14,6 @@ import androidx.navigation.fragment.findNavController
 import com.sorrowblue.cotlin.ui.UiViewModel
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.appBarLayout
-import org.koin.androidx.viewmodel.ext.android.getSharedViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.sorrowblue.cotlin.futures.permission.databinding.PermissionFragmentMainBinding as FragmentBinding

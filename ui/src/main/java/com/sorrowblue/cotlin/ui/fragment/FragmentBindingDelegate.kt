@@ -35,10 +35,8 @@ internal constructor(private val init: (LayoutInflater) -> T) : FragmentDelegate
 		).inflater.let(init::invoke)
 }
 
-@Suppress("unused")
 fun <T : ViewDataBinding> Fragment.dataBinding(@LayoutRes layoutId: Int): FragmentBindingDelegate<T> =
 	FragmentBindingDelegate(layoutId)
 
-@Suppress("unused")
 fun <T : ViewBinding> Fragment.viewBinding(init: (LayoutInflater) -> T): FragmentViewBindingDelegate<T> =
 	FragmentViewBindingDelegate(init)

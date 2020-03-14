@@ -20,7 +20,7 @@
 			android:layout_height="match_parent"
 			app:defaultNavHost="true"
 			app:navGraph="@navigation/mobile_navigation"
-			tools:layout="@layout/list_fragment_main" />
+			tools:layout="@layout/folder_fragment_main" />
 
 	</FrameLayout>
 </layout>

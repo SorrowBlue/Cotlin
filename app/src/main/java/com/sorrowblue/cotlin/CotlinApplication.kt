@@ -1,7 +1,6 @@
 package com.sorrowblue.cotlin
 
 import android.app.Application
-import androidx.appcompat.app.AppCompatDelegate
 import com.sorrowblue.cotlin.futures.settings.Settings
 import com.sorrowblue.cotlin.modules.dataModule
 import com.sorrowblue.cotlin.modules.futureModule

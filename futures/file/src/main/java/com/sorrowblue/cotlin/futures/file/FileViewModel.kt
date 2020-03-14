@@ -14,7 +14,7 @@ import com.sorrowblue.cotlin.domains.folder.Folder
 import com.sorrowblue.cotlin.domains.folder.FolderRepository
 
 internal class FileViewModel(
-	val context: Context,
+	private val context: Context,
 	val folder: Folder,
 	val adapter: FileAdapter,
 	private val repo: FolderRepository

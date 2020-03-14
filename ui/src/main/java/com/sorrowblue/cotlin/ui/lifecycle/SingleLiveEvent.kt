@@ -1,4 +1,4 @@
-package com.sorrowblue.edc.ui.lifecycle
+package com.sorrowblue.cotlin.ui.lifecycle
 
 import androidx.annotation.MainThread
 import androidx.fragment.app.Fragment

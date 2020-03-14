@@ -1,4 +1,4 @@
-package com.sorrowblue.edc.ui.view
+package com.sorrowblue.cotlin.ui.view
 
 import android.widget.Toast
 import androidx.annotation.IntDef

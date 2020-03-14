@@ -22,7 +22,6 @@ internal class ImageFragment : DataBindingFragment<FragmentBinding>(R.layout.ima
 		super.onCreate(savedInstanceState)
 		val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
 		enterTransition = forward
-
 		val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
 		exitTransition = backward
 	}

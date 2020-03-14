@@ -2,7 +2,7 @@ package com.sorrowblue.cotlin.ui
 
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.ViewModel
-import com.sorrowblue.edc.ui.lifecycle.NonNullLiveData
+import com.sorrowblue.cotlin.ui.lifecycle.NonNullLiveData
 
 class UiViewModel : ViewModel() {
 	var isFullScreen
