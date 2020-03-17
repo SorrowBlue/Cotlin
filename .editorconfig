@@ -435,11 +435,6 @@ ij_xml_block_comment_at_first_column = true
 ij_xml_keep_indents_on_empty_lines = false
 ij_xml_line_comment_at_first_column = true
 ij_xml_use_custom_settings = true
-ij_continuation_indent_size = 4
-ij_xml_block_comment_at_first_column = true
-ij_xml_keep_indents_on_empty_lines = false
-ij_xml_line_comment_at_first_column = true
-ij_xml_use_custom_settings = true
 
 [{*.kt, *.gradle.kts, *.kts}]
 ij_kotlin_align_in_columns_case_branch = false

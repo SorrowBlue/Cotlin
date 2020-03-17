@@ -8,6 +8,10 @@
 		<variable
 			name="folder"
 			type="com.sorrowblue.cotlin.domains.folder.Folder" />
+
+		<variable
+			name="transformation"
+			type="coil.transform.Transformation" />
 	</data>
 
 	<androidx.constraintlayout.widget.ConstraintLayout
@@ -19,6 +23,7 @@
 
 		<ImageView
 			android:id="@+id/imageView"
+			coil_transformation="@{transformation}"
 			coil_uri="@{folder.child.get(0).uri}"
 			android:layout_width="0dp"
 			android:layout_height="0dp"

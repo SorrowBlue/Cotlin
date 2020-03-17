@@ -5,7 +5,6 @@ import android.util.Log
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.exifinterface.media.ExifInterface
-import coil.api.load
 import com.sorrowblue.cotlin.domains.image.Image
 import com.sorrowblue.cotlin.ui.recyclerview.DataBindAdapter
 import com.sorrowblue.cotlin.futures.image.databinding.ImageViewPagerItemPhotoBinding as ItemBinding
@@ -18,7 +17,7 @@ internal class ImagePagerAdapter :
 			parent, R.layout.image_view_pager_item_photo
 		) {
 		override fun bind(value: Image, position: Int) {
-			binding.imageView.load(value.uri)
+			binding.image = value
 			ViewCompat.setTransitionName(binding.imageView, value.name)
 			binding.root.context.contentResolver.openInputStream(value.uri)?.use {
 				val exif = ExifInterface(it)

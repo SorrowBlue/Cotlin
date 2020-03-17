@@ -17,74 +17,69 @@
 			android:layout_height="0dp"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
+			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="parent">
+			app:layout_constraintTop_toTopOf="parent"
+			app:layout_constraintVertical_bias="0.0" />
 
-		</androidx.viewpager2.widget.ViewPager2>
-
-		<View
-			android:id="@+id/view"
-			android:layout_width="0dp"
-			android:layout_height="0dp"
-			app:layout_constraintBottom_toBottomOf="parent"
-			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintStart_toStartOf="parent"
-			app:layout_constraintTop_toTopOf="@+id/viewPager2" />
-
-		<Button
+		<ImageView
 			android:id="@+id/favorite"
-			style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:drawableTop="@drawable/image_ic_twotone_star"
-			android:drawableTint="@color/color_primary"
-			android:text="お気に入り"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:layout_marginStart="16dp"
+			android:layout_marginBottom="16dp"
+			android:foreground="?attr/actionBarItemBackground"
+			android:padding="16dp"
+			android:tint="@color/color_primary"
 			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/edit"
 			app:layout_constraintHorizontal_bias="0.5"
-			app:layout_constraintStart_toStartOf="parent" />
+			app:layout_constraintStart_toStartOf="parent"
+			app:srcCompat="@drawable/image_ic_twotone_star_checkable" />
 
-		<Button
+		<ImageView
 			android:id="@+id/edit"
-			style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:drawableTop="@drawable/image_ic_twotone_edit"
-			android:drawableTint="@color/color_primary"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:layout_marginBottom="16dp"
+			android:foreground="?attr/actionBarItemBackground"
+			android:padding="16dp"
 			android:text="編集"
-			app:layout_constraintBottom_toBottomOf="@+id/favorite"
+			android:tint="@color/color_primary"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/share"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/favorite"
-			app:layout_constraintTop_toTopOf="@+id/favorite" />
+			app:srcCompat="@drawable/image_ic_twotone_edit" />
 
-		<Button
+		<ImageView
 			android:id="@+id/share"
-			style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:drawableTop="@drawable/image_ic_twotone_share"
-			android:drawableTint="@color/color_primary"
-			android:text="共有"
-			app:layout_constraintBottom_toBottomOf="@+id/favorite"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:layout_marginBottom="16dp"
+			android:foreground="?attr/actionBarItemBackground"
+			android:padding="16dp"
+			android:tint="@color/color_primary"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toStartOf="@+id/delete"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/edit"
-			app:layout_constraintTop_toTopOf="@+id/favorite" />
+			app:srcCompat="@drawable/image_ic_twotone_share" />
 
-		<Button
+		<ImageView
 			android:id="@+id/delete"
-			style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:drawableTop="@drawable/image_ic_twotone_delete"
-			android:drawableTint="@color/color_primary"
-			android:text="削除"
-			app:layout_constraintBottom_toBottomOf="@+id/favorite"
+			android:layout_width="64dp"
+			android:layout_height="64dp"
+			android:layout_marginEnd="16dp"
+			android:layout_marginBottom="16dp"
+			android:foreground="?attr/actionBarItemBackground"
+			android:padding="16dp"
+			android:tint="@color/color_primary"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/share"
-			app:layout_constraintTop_toTopOf="@+id/favorite" />
+			app:srcCompat="@drawable/image_ic_twotone_delete" />
 
 		<androidx.constraintlayout.widget.Group
 			android:id="@+id/group"

@@ -1,6 +1,7 @@
 dependencies {
 	implementation(project(Modules.ui))
 	implementation(project(Modules.`data-folder`))
+	implementation(project(Modules.`data-image`))
 	implementation(project(Modules.`futures-folder`))
 	implementation(project(Modules.`futures-file`))
 	implementation(project(Modules.`futures-image`))

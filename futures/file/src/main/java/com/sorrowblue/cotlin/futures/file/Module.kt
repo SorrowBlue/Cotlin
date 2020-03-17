@@ -6,6 +6,6 @@ import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
 fun futureFileModule() = module {
-	factory { FileAdapter() }
+	factory { FileAdapter(androidContext()) }
 	viewModel { (folder: Folder) ->  FileViewModel(androidContext(), folder, get(), get()) }
 }

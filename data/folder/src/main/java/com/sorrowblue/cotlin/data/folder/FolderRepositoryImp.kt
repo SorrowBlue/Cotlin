@@ -7,7 +7,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore.Images.Media
-import androidx.annotation.RequiresApi
 import androidx.core.content.ContentResolverCompat
 import androidx.core.database.getLongOrNull
 import androidx.core.database.getStringOrNull
@@ -24,16 +23,15 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 	).apply { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) add(Media.RELATIVE_PATH) }
 		.toTypedArray()
 
-	@RequiresApi(Build.VERSION_CODES.O)
 	override fun reload(folder: Folder): List<Image> {
-		@Suppress("DEPRECATION") val selection =
+		val selection =
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) "${Media.RELATIVE_PATH} like ? " else "${Media.DATA} like ? "
 		return ContentResolverCompat.query(
 			context.contentResolver,
 			Media.EXTERNAL_CONTENT_URI,
 			projection,
 			selection,
-			arrayOf("%${folder.path}%"),
+			arrayOf("${folder.path}%"),
 			Media.DISPLAY_NAME,
 			null
 		)?.use {
@@ -57,7 +55,6 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 		} ?: emptyList()
 	}
 
-	@RequiresApi(Build.VERSION_CODES.O)
 	private fun extractImage(cursor: Cursor): List<Folder> {
 		val folderList = mutableListOf<Folder>()
 		val api = ImageApi(context.contentResolver, cursor)
@@ -88,7 +85,6 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 		return folderList
 	}
 
-	@RequiresApi(Build.VERSION_CODES.O)
 	override suspend fun getAll(): List<Folder> {
 		return ContentResolverCompat.query(
 			context.contentResolver,
@@ -104,7 +100,6 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 
 
 class ImageApi(private val contentResolver: ContentResolver, private val cursor: Cursor) {
-	@Suppress("DEPRECATION")
 	private val projection =
 		if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) arrayOf(Media.DATA) else null
 	private val relativePathColumn =

@@ -57,6 +57,10 @@ abstract class DataBindingFragment<T : ViewDataBinding>(
 //	}
 }
 
+fun <T> Fragment.setResult(key: String, value: T) {
+	findNavController().previousBackStackEntry?.savedStateHandle?.set(key, value)
+}
+
 fun <T : Any?> Fragment.resultLiveData(key: String) = ResultLiveDataDelegate<T>(key)
 fun <T : Any?> Fragment.getResultOnce(key: String, callback: (T) -> Unit) =
 	findNavController().currentBackStackEntry?.savedStateHandle?.let { handle ->

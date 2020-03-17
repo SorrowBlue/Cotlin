@@ -13,6 +13,8 @@
 	</data>
 
 	<androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+		isRefreshing="@{viewModel.isLoading}"
+		onRefresh="@{()  ->  viewModel.refresh()}"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent">
 

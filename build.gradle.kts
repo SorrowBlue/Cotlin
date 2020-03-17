@@ -36,6 +36,7 @@ subprojects {
 				compileOptions {
 					sourceCompatibility = JavaVersion.VERSION_1_8
 					targetCompatibility = JavaVersion.VERSION_1_8
+					coreLibraryDesugaringEnabled = true
 				}
 				kotlinOptions {
 					jvmTarget = "1.8"
@@ -69,6 +70,7 @@ subprojects {
 		dependencies {
 			api(Libs.`kotlin-stdlib-jdk7`)
 			implementation(Libs.`core-ktx`)
+			add("coreLibraryDesugaring", "com.android.tools:desugar_jdk_libs:1.0.5")
 			testImplementation(Libs.junit)
 			androidTestImplementation(Libs.`androidx-junit`)
 			androidTestImplementation(Libs.`androidx-junit-ktx`)

@@ -3,15 +3,13 @@ package com.sorrowblue.cotlin.futures.file
 import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
-import android.os.Build
 import android.os.Handler
 import android.provider.MediaStore
-import androidx.lifecycle.Lifecycle
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.OnLifecycleEvent
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.sorrowblue.cotlin.domains.folder.Folder
 import com.sorrowblue.cotlin.domains.folder.FolderRepository
+import kotlinx.coroutines.launch
 
 internal class FileViewModel(
 	private val context: Context,
@@ -19,6 +17,7 @@ internal class FileViewModel(
 	val adapter: FileAdapter,
 	private val repo: FolderRepository
 ) : ViewModel(),
+	SwipeRefreshLayout.OnRefreshListener,
 	LifecycleObserver {
 
 	private val contentObserver = object : ContentObserver(Handler()) {
@@ -37,10 +36,17 @@ internal class FileViewModel(
 	}
 
 	fun refresh() {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			adapter.setList(repo.reload(folder))
+		isLoading.postValue(true)
+		viewModelScope.launch {
+			adapter.currentList = repo.reload(folder)
+			isLoading.postValue(false)
 		}
 	}
+
+	val isLoading = MutableLiveData(false)
+
+
+	override fun onRefresh() = refresh()
 
 	@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
 	private fun onDestroy() = context.contentResolver.registerContentObserver(

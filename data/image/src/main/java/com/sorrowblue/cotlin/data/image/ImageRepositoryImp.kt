@@ -1,13 +1,28 @@
 package com.sorrowblue.cotlin.data.image
 
+import android.app.RecoverableSecurityException
 import android.content.Context
+import android.content.IntentSender
+import android.os.Build
 import androidx.exifinterface.media.ExifInterface
 import com.sorrowblue.cotlin.domains.image.DetailImageInfo
 import com.sorrowblue.cotlin.domains.image.Image
 import com.sorrowblue.cotlin.domains.image.ImageRepository
 
+
 internal class ImageRepositoryImp(private val context: Context) : ImageRepository {
 
+	override suspend fun delete(image: Image, recover: (IntentSender) -> Unit) {
+		kotlin.runCatching {
+			context.contentResolver.delete(image.uri, null, null)
+		}.recoverCatching {
+			if (Build.VERSION.SDK_INT < Build.VERSION_CODES.Q)
+				return
+			val e =it as RecoverableSecurityException
+			val intentSender = e.userAction.actionIntent.intentSender
+			intentSender?.let(recover::invoke)
+		}
+	}
 
 	override fun getExif(image: Image): DetailImageInfo? {
 		return context.contentResolver.openInputStream(image.uri)?.use {

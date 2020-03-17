@@ -1,6 +1,7 @@
 package com.sorrowblue.cotlin.futures.permission
 
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
+import android.Manifest.permission.WRITE_EXTERNAL_STORAGE
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
@@ -71,5 +72,5 @@ internal class PermissionFragment :
 	}
 
 	private fun requestPermissions() =
-		requestPermissions(arrayOf(READ_EXTERNAL_STORAGE), REQUEST_READ_EXTERNAL_STORAGE)
+		requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE), REQUEST_READ_EXTERNAL_STORAGE)
 }
