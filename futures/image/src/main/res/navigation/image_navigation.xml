@@ -3,7 +3,8 @@
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	xmlns:tools="http://schemas.android.com/tools"
 	android:id="@+id/image_navigation"
-	app:startDestination="@id/imageFragment">
+	app:startDestination="@id/imageFragment"
+	tools:ignore="UnusedNavigation">
 
 	<fragment
 		android:id="@+id/imageFragment"
@@ -11,13 +12,10 @@
 		android:name="com.sorrowblue.cotlin.futures.image.ImageFragment"
 		android:label="ImageFragment" >
 		<argument
-			android:name="images"
-			app:argType="com.sorrowblue.cotlin.domains.image.Image[]" />
+			android:name="folder"
+			app:argType="com.sorrowblue.cotlin.domains.folder.Folder" />
 		<argument
 			android:name="position"
 			app:argType="integer" />
-		<argument
-			android:name="transitionName"
-			app:argType="string" />
 	</fragment>
 </navigation>

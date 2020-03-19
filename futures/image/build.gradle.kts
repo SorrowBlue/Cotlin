@@ -7,5 +7,5 @@ dependencies {
 	implementation(Libs.photoView)
 	implementation(Libs.`subsampling-scale-image-view`)
 	implementation(project(Modules.ui))
-	implementation(project(Modules.`domain-image`))
+	implementation(project(Modules.`domain-folder`))
 }

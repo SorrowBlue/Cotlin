@@ -5,12 +5,14 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.transition.TransitionManager
-import android.util.Log
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
 import androidx.core.view.isVisible
 import androidx.lifecycle.coroutineScope
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
@@ -19,87 +21,78 @@ import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.appBarLayout
 import com.sorrowblue.cotlin.ui.fragment.toolbar
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
+import com.sorrowblue.cotlin.ui.view.item
+import com.sorrowblue.cotlin.ui.view.setOnClickListener
 import kotlinx.coroutines.launch
 import org.koin.android.ext.android.get
+import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.parameter.parametersOf
 import com.sorrowblue.cotlin.futures.image.databinding.ImageFragmentMainBinding as FragmentBinding
 
-internal class ImageFragment : DataBindingFragment<FragmentBinding>(R.layout.image_fragment_main) {
+internal class ImageFragment :
+	DataBindingFragment<FragmentBinding>(R.layout.image_fragment_main, R.menu.image_main) {
 
-	private lateinit var adapter: ImagePagerAdapter
 	private val args: ImageFragmentArgs by navArgs()
+	private val viewModel: ImageViewModel by viewModel { parametersOf(args.folder) }
+
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		val forward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
-		enterTransition = forward
-		val backward = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
-		exitTransition = backward
+		enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
+		exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
-		ViewCompat.setTransitionName(binding.root, args.transitionName)
-		binding.root.viewTreeObserver.addOnPreDrawListener {
-			startPostponedEnterTransition()
-			true
+		binding.viewModel = viewModel
+		viewLifecycleOwner.lifecycle.addObserver(viewModel)
+		viewModel.action.observe(this) {
+			when (it) {
+				ImageViewModel.Action.FAVORITE -> favorite()
+				ImageViewModel.Action.EDIT -> startEdit()
+				ImageViewModel.Action.SHARE -> startShare()
+				ImageViewModel.Action.OPEN -> openOther()
+				ImageViewModel.Action.DELETE -> startDelete()
+			}
 		}
 		binding.favorite.applyNavigationBarBottomMarginInsets()
-		binding.edit.applyNavigationBarBottomMarginInsets()
-		binding.share.applyNavigationBarBottomMarginInsets()
-		binding.delete.applyNavigationBarBottomMarginInsets()
-		adapter = ImagePagerAdapter().apply {
-			setList(args.images.asList())
-		}
-		binding.favorite.setOnClickListener {
-			val checked = !((binding.favorite.tag as? Boolean) ?: false)
-			val state = if (checked) intArrayOf(android.R.attr.state_checked) else intArrayOf()
-			binding.favorite.setImageState(state, true)
-			binding.favorite.tag = checked
-		}
-		binding.viewPager2.adapter = adapter
-		binding.viewPager2.setCurrentItem(args.position, false)
-		binding.edit.setOnClickListener {
-			adapter.setRotation(binding.viewPager2.currentItem, -90)
-		}
-		adapter.onClick = {
-			MaterialFade.create(requireContext()).also {
-				TransitionManager.beginDelayedTransition(toolbar.parent as ViewGroup, it)
-				appBarLayout.isVisible = !appBarLayout.isVisible
+		binding.executePendingBindings()
+		viewModel.adapter.onClick = {
+			MaterialFade.create(requireContext(), true).also {
+				TransitionManager.beginDelayedTransition(appBarLayout.parent as ViewGroup, it)
 				binding.group.isVisible = !binding.group.isVisible
+				appBarLayout.isVisible = !appBarLayout.isVisible
 			}
-		}
-		binding.share.setOnClickListener {
-			val editIntent = Intent(Intent.ACTION_SEND)
-			editIntent.setDataAndType(
-				adapter.currentList[binding.viewPager2.currentItem].uri,
-				adapter.currentList[binding.viewPager2.currentItem].contentType
-			)
-			editIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-			startActivity(Intent.createChooser(editIntent, "Share images..."))
-		}
-		binding.delete.setOnClickListener {
-			viewLifecycleOwner.lifecycle.coroutineScope.launch {
-				get<ImageRepository>().delete(
-					adapter.currentList[binding.viewPager2.currentItem]
-				) {
-					startIntentSenderForResult(it, 100, null, 0, 0, 0, null)
-				}
-			}
-		}
-		binding.edit.setOnClickListener {
-			val editIntent = Intent(Intent.ACTION_EDIT)
-			editIntent.setDataAndType(
-				adapter.currentList[binding.viewPager2.currentItem].uri,
-				adapter.currentList[binding.viewPager2.currentItem].contentType
-			)
-			editIntent.flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
-			startActivity(editIntent)
+			var flag =
+				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+			if (!binding.group.isVisible) flag =
+				flag or View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN or View.SYSTEM_UI_FLAG_IMMERSIVE
+			binding.root.systemUiVisibility = flag
 		}
 		postponeEnterTransition()
+		binding.root.doOnPreDraw {
+			startPostponedEnterTransition()
+		}
+		binding.viewPager2.doOnPreDraw {
+			viewModel.currentItem.value = args.position
+		}
+		viewModel.currentItem.observe(this) {
+			binding.imageTextview.text = "$it/${viewModel.adapter.currentList.size - 1}"
+			toolbar.title = viewModel.adapter.currentList[it].name
+		}
+		viewModel.isEmpty.observe(this) {
+			if (it) findNavController().navigateUp()
+		}
+	}
+
+	override fun onBindMenu(menu: Menu) {
+		menu.item<MenuItem>(R.id.open) {
+			it.setOnClickListener { viewModel.setAction(ImageViewModel.Action.OPEN) }
+		}
 	}
 
 	override fun onStart() {
 		super.onStart()
-		toolbar.title = args.images[args.position].name
+		toolbar.title = args.folder.child[args.position].name
 	}
 
 	override fun onStop() {
@@ -112,27 +105,59 @@ internal class ImageFragment : DataBindingFragment<FragmentBinding>(R.layout.ima
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-		Log.d(
-			javaClass.simpleName, """
-			requestCode == $requestCode
-					${data?.extras?.keySet()?.toList()}
-				""".trimIndent()
-		)
 		if (resultCode == Activity.RESULT_OK && requestCode == 100) {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
 				requireContext().contentResolver.delete(
-					adapter.currentList[binding.viewPager2.currentItem].uri,
+					viewModel.adapter.currentList[binding.viewPager2.currentItem].uri,
 					null,
 					null
 				)
-				Log.d(
-					javaClass.simpleName, """
-					${data?.extras?.keySet()?.toList()}
-				""".trimIndent()
-				)
+				viewModel.refresh()
 			}
 		} else {
 			super.onActivityResult(requestCode, resultCode, data)
 		}
 	}
+
+	private fun favorite() {
+		val checked = !((binding.favorite.tag as? Boolean) ?: false)
+		val state = if (checked) intArrayOf(android.R.attr.state_checked) else intArrayOf()
+		binding.favorite.setImageState(state, true)
+		binding.favorite.tag = checked
+	}
+
+	private fun startEdit() {
+		val image = viewModel.image
+		Intent(Intent.ACTION_EDIT).apply {
+			setDataAndType(image.uri, image.contentType)
+			flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+		}.let(this::startActivity)
+	}
+
+	private fun startDelete() {
+		val image = viewModel.image
+		viewLifecycleOwner.lifecycle.coroutineScope.launch {
+			get<ImageRepository>().delete(image) {
+				startIntentSenderForResult(it, 100, null, 0, 0, 0, null)
+			}
+		}
+	}
+
+	private fun startShare() {
+		val image = viewModel.image
+		Intent(Intent.ACTION_SEND).run {
+			setDataAndType(image.uri, image.contentType)
+			flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+			Intent.createChooser(this, "Share images...")
+		}.let(this::startActivity)
+	}
+
+	private fun openOther() {
+		val image = viewModel.image
+		Intent(Intent.ACTION_VIEW).apply {
+			setDataAndType(image.uri, image.contentType)
+			flags = Intent.FLAG_GRANT_READ_URI_PERMISSION
+		}.let(this::startActivity)
+	}
+
 }

@@ -14,9 +14,6 @@
 		<argument
 			android:name="folder"
 			app:argType="com.sorrowblue.cotlin.domains.folder.Folder" />
-		<argument
-			android:name="transitionName"
-			app:argType="string" />
 		<action
 			android:id="@+id/action_to_image_navigation"
 			app:destination="@id/image_navigation"

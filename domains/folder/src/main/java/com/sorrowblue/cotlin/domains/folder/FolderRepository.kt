@@ -4,5 +4,5 @@ import com.sorrowblue.cotlin.domains.image.Image
 
 interface FolderRepository {
 	suspend fun getAll(): List<Folder>
-	fun reload(folder: Folder): List<Image>
+	suspend fun reload(folder: Folder): List<Image>
 }

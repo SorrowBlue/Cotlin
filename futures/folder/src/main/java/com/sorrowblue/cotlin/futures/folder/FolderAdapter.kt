@@ -2,9 +2,7 @@ package com.sorrowblue.cotlin.futures.folder
 
 import android.content.Context
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import coil.transform.BlurTransformation
 import com.sorrowblue.cotlin.domains.folder.Folder
 import com.sorrowblue.cotlin.futures.file.FileFragmentArgs
@@ -14,7 +12,7 @@ import com.sorrowblue.cotlin.futures.folder.databinding.FolderRecyclerViewItemMa
 internal class FolderAdapter(context: Context) :
 	DataBindAdapter<Folder, ItemBinding, FolderAdapter.ViewHolder>() {
 
-	private val transformation = BlurTransformation(context, 2f, 2f)
+	private val transformation = BlurTransformation(context, 3f, 3f)
 
 	override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = ViewHolder(parent)
 	override fun areItemsTheSame(old: Folder, new: Folder) = old.name == new.name
@@ -26,13 +24,10 @@ internal class FolderAdapter(context: Context) :
 		override fun bind(value: Folder, position: Int) {
 			binding.folder = value
 			binding.transformation = transformation
-			ViewCompat.setTransitionName(binding.root, "folder_$position")
 			binding.root.setOnClickListener {
 				it.findNavController().navigate(
 					FolderFragmentDirections.actionToFileNavigation().actionId,
-					FileFragmentArgs(value, it.transitionName).toBundle(),
-					null,
-					FragmentNavigatorExtras(it to it.transitionName)
+					FileFragmentArgs(value).toBundle()
 				)
 			}
 			binding.executePendingBindings()

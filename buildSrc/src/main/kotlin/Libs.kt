@@ -27,7 +27,8 @@ object Libs {
 	const val appcompat = "androidx.appcompat:appcompat:1.2.0-alpha03"
 	const val `core-ktx` = "androidx.core:core-ktx:1.3.0-alpha02"
 	const val `legacy-support-v4` = "androidx.legacy:legacy-support-v4:1.0.0"
-	const val `fragment-ktx` = "androidx.fragment:fragment-ktx:1.3.0-alpha01"
+	const val `fragment-ktx` = "androidx.fragment:fragment-ktx:1.3.0-alpha02"
+	const val `activity-ktx` = "androidx.activity:activity-ktx:1.2.0-alpha02"
 	const val browser = "androidx.browser:browser:1.3.0-alpha01"
 
 	const val `recyclerview-selection` = "androidx.recyclerview:recyclerview-selection:1.1.0-rc01"
@@ -85,7 +86,7 @@ object Libs {
 
 
 	const val junit = "junit:junit:4.13"
-	const val `androidx-junit` = "androidx.test.ext:junit:1.1.2-alpha04"
-	const val `androidx-junit-ktx` = "androidx.test.ext:junit-ktx:1.1.2-alpha04"
-	const val `espresso-core` = "androidx.test.espresso:espresso-core:3.3.0-alpha04"
+	const val `androidx-junit` = "androidx.test.ext:junit:1.1.2-alpha05"
+	const val `androidx-junit-ktx` = "androidx.test.ext:junit-ktx:1.1.2-alpha05"
+	const val `espresso-core` = "androidx.test.espresso:espresso-core:3.3.0-alpha05"
 }

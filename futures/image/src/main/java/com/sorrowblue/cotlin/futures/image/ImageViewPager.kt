@@ -19,24 +19,6 @@ internal class ImagePagerAdapter :
 		override fun bind(value: Image, position: Int) {
 			binding.image = value
 			ViewCompat.setTransitionName(binding.imageView, value.name)
-			binding.root.context.contentResolver.openInputStream(value.uri)?.use {
-				val exif = ExifInterface(it)
-				Log.d(
-					javaClass.simpleName, """
-					Camera: ${exif.getAttribute(ExifInterface.TAG_MODEL)}
-					TAG_EXPOSURE_TIME: ${exif.getAttribute(ExifInterface.TAG_EXPOSURE_TIME)}
-					f/${exif.getAttributeDouble(ExifInterface.TAG_APERTURE_VALUE, -1.0).convertF()}
-					ISO: ${exif.getAttributeDouble(
-						ExifInterface.TAG_PHOTOGRAPHIC_SENSITIVITY,
-						-1.0
-					)}
-					flash: ${exif.getAttributeDouble(ExifInterface.TAG_FLASH, -1.0)}
-					orientation: ${exif.getAttribute(ExifInterface.TAG_ORIENTATION)}
-					make: ${exif.getAttribute(ExifInterface.TAG_MAKE)}
-				""".trimIndent()
-				)
-			}
-
 			binding.imageView.setOnClickListener {
 				onClick.invoke()
 			}

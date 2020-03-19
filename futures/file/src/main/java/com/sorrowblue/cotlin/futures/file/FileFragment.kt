@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.provider.MediaStore
 import android.view.View
-import androidx.core.view.ViewCompat
+import androidx.core.view.doOnPreDraw
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.transition.MaterialSharedAxis
 import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
@@ -34,14 +35,13 @@ internal class FileFragment : DataBindingFragment<FragmentBinding>(R.layout.file
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 		super.onViewCreated(view, savedInstanceState)
+		viewLifecycleOwner.lifecycle.addObserver(viewModel)
+		viewModel.isEmpty.observe(this) {
+			if (it) findNavController().navigateUp()
+		}
 		binding.recyclerView.applyVerticalInsets()
 		binding.viewModel = viewModel
-		ViewCompat.setTransitionName(binding.root, args.transitionName)
-		postponeEnterTransition()
-		binding.recyclerView.viewTreeObserver.addOnPreDrawListener {
-			startPostponedEnterTransition()
-			true
-		}
+		binding.root.doOnPreDraw { startPostponedEnterTransition() }
 	}
 
 	override fun onStart() {

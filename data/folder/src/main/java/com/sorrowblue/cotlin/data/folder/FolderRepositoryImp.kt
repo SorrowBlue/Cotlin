@@ -23,7 +23,7 @@ internal class FolderRepositoryImp(private val context: Context) : FolderReposit
 	).apply { if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) add(Media.RELATIVE_PATH) }
 		.toTypedArray()
 
-	override fun reload(folder: Folder): List<Image> {
+	override suspend fun reload(folder: Folder): List<Image> {
 		val selection =
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) "${Media.RELATIVE_PATH} like ? " else "${Media.DATA} like ? "
 		return ContentResolverCompat.query(
