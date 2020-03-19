@@ -34,16 +34,16 @@
 		</androidx.viewpager2.widget.ViewPager2>
 
 		<TextView
-			android:id="@+id/image_textview"
+			android:id="@+id/count"
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
-			android:layout_marginTop="16dp"
-			android:layout_marginEnd="16dp"
-			android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-			android:textColor="@color/color_secondary"
+			android:layout_marginEnd="8dp"
+			android:layout_marginBottom="8dp"
+			android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+			android:textColor="?attr/colorOnBackground"
 			android:textStyle="bold"
+			app:layout_constraintBottom_toBottomOf="parent"
 			app:layout_constraintEnd_toEndOf="parent"
-			app:layout_constraintTop_toTopOf="parent"
 			tools:text="5/10" />
 
 		<ImageView
@@ -60,7 +60,8 @@
 			app:layout_constraintEnd_toStartOf="@+id/edit"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toStartOf="parent"
-			app:srcCompat="@drawable/image_ic_twotone_star_checkable" />
+			app:srcCompat="@drawable/image_ic_twotone_star_checkable"
+			android:contentDescription="@string/image_label_favorite" />
 
 		<ImageView
 			android:id="@+id/edit"
@@ -69,13 +70,13 @@
 			android:foreground="?attr/actionBarItemBackground"
 			android:onClick="@{() -> viewModel.setAction(Action.EDIT)}"
 			android:padding="16dp"
-			android:text="編集"
 			android:tint="@color/color_primary"
 			app:layout_constraintBottom_toBottomOf="@+id/favorite"
 			app:layout_constraintEnd_toStartOf="@+id/share"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/favorite"
-			app:srcCompat="@drawable/image_ic_twotone_edit" />
+			app:srcCompat="@drawable/image_ic_twotone_edit"
+			android:contentDescription="@string/image_label_edit" />
 
 		<ImageView
 			android:id="@+id/share"
@@ -89,7 +90,8 @@
 			app:layout_constraintEnd_toStartOf="@+id/delete"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/edit"
-			app:srcCompat="@drawable/image_ic_twotone_share" />
+			app:srcCompat="@drawable/image_ic_twotone_share"
+			android:contentDescription="@string/image_label_share" />
 
 		<ImageView
 			android:id="@+id/delete"
@@ -104,7 +106,8 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/share"
-			app:srcCompat="@drawable/image_ic_twotone_delete" />
+			app:srcCompat="@drawable/image_ic_twotone_delete"
+			android:contentDescription="@string/image_label_delete" />
 
 		<androidx.constraintlayout.widget.Group
 			android:id="@+id/group"

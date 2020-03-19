@@ -21,6 +21,7 @@ import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.appBarLayout
 import com.sorrowblue.cotlin.ui.fragment.toolbar
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
+import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsetsAndAppbarSize
 import com.sorrowblue.cotlin.ui.view.item
 import com.sorrowblue.cotlin.ui.view.setOnClickListener
 import kotlinx.coroutines.launch
@@ -55,12 +56,14 @@ internal class ImageFragment :
 			}
 		}
 		binding.favorite.applyNavigationBarBottomMarginInsets()
+		binding.count.applyNavigationBarBottomMarginInsets()
 		binding.executePendingBindings()
 		viewModel.adapter.onClick = {
 			MaterialFade.create(requireContext(), true).also {
 				TransitionManager.beginDelayedTransition(appBarLayout.parent as ViewGroup, it)
-				binding.group.isVisible = !binding.group.isVisible
 				appBarLayout.isVisible = !appBarLayout.isVisible
+				binding.group.isVisible = !binding.group.isVisible
+				binding.count.isVisible = !binding.count.isVisible
 			}
 			var flag =
 				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
@@ -76,7 +79,7 @@ internal class ImageFragment :
 			viewModel.currentItem.value = args.position
 		}
 		viewModel.currentItem.observe(this) {
-			binding.imageTextview.text = "$it/${viewModel.adapter.currentList.size - 1}"
+			binding.count.text = "${it + 1}/${viewModel.adapter.currentList.size}"
 			toolbar.title = viewModel.adapter.currentList[it].name
 		}
 		viewModel.isEmpty.observe(this) {

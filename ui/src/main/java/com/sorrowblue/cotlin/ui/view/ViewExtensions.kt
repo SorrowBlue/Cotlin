@@ -46,6 +46,16 @@ fun View.applySystemBarPaddingInsets() = doOnApplyWindowInsets { view, insets, p
 	)
 }
 
+fun View.applySystemBarPaddingInsetsAndAppbarSize() = doOnApplyWindowInsets { view, insets, padding, _ ->
+	val actionBarSize =
+		context.theme.resolveDimensionPixelSize(AppcompatR.attr.actionBarSize, true)
+	view.updatePadding(
+		top = padding.top + insets.systemWindowInsetTop + actionBarSize,
+		left = insets.systemWindowInsetLeft,
+		right = insets.systemWindowInsetRight
+	)
+}
+
 fun View.applyNavigationBarPaddingInsets() = doOnApplyWindowInsets { view, insets, padding, _ ->
 	view.updatePadding(
 		bottom = padding.bottom + insets.systemWindowInsetBottom,
