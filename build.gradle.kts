@@ -6,7 +6,7 @@ buildscript {
 	}
 	dependencies {
 		classpath(kotlin("gradle-plugin", Versions.kotlin))
-		classpath(`android-tools-build-gradle`("4.0.0-beta02"))
+		classpath(`android-tools-build-gradle`("4.0.0-beta03"))
 		classpath(`oss-licenses-plugin`)
 		classpath(`navigation-safe-args-gradle-plugin`)
 
