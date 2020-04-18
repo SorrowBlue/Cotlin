@@ -4,7 +4,7 @@ import android.content.Context
 import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
-import android.provider.MediaStore
+import android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI
 import androidx.lifecycle.*
 import com.sorrowblue.cotlin.domains.folder.Folder
 import com.sorrowblue.cotlin.domains.folder.FolderRepository
@@ -58,19 +58,16 @@ internal class ImageViewModel(
 			} else {
 				currentItem.postValue(adapter.currentList.size - 1)
 			}
-
 		}
 	}
 
 
-	@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
-	private fun onDestroy() = context.contentResolver.registerContentObserver(
-		MediaStore.Images.Media.EXTERNAL_CONTENT_URI, true, contentObserver
-	)
-
 	@OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-	private fun onCreate() = context.contentResolver.unregisterContentObserver(contentObserver)
+	private fun onCreate() = context.contentResolver
+		.registerContentObserver(EXTERNAL_CONTENT_URI, true, contentObserver)
+
+	@OnLifecycleEvent(Lifecycle.Event.ON_DESTROY)
+	private fun onDestroy() = context.contentResolver.unregisterContentObserver(contentObserver)
 
 	enum class Action { FAVORITE, EDIT, SHARE, OPEN, DELETE }
-
 }

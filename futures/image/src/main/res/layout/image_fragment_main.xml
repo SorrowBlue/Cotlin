@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	xmlns:tools="http://schemas.android.com/tools">
 
 	<data>
 
@@ -29,7 +29,7 @@
 			app:layout_constraintHorizontal_bias="0.0"
 			app:layout_constraintStart_toStartOf="parent"
 			app:layout_constraintTop_toTopOf="parent"
-			app:layout_constraintVertical_bias="0.0" >
+			app:layout_constraintVertical_bias="0.0">
 
 		</androidx.viewpager2.widget.ViewPager2>
 
@@ -39,6 +39,7 @@
 			android:layout_height="wrap_content"
 			android:layout_marginEnd="8dp"
 			android:layout_marginBottom="8dp"
+			android:text="@{String.valueOf(viewModel.currentItem + 1) + `/` + String.valueOf(viewModel.adapter.currentList.size())}"
 			android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
 			android:textColor="?attr/colorOnBackground"
 			android:textStyle="bold"
@@ -52,6 +53,7 @@
 			android:layout_height="64dp"
 			android:layout_marginStart="16dp"
 			android:layout_marginBottom="16dp"
+			android:contentDescription="@string/image_label_favorite"
 			android:foreground="?attr/actionBarItemBackground"
 			android:onClick="@{() -> viewModel.setAction(Action.FAVORITE)}"
 			android:padding="16dp"
@@ -60,13 +62,13 @@
 			app:layout_constraintEnd_toStartOf="@+id/edit"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toStartOf="parent"
-			app:srcCompat="@drawable/image_ic_twotone_star_checkable"
-			android:contentDescription="@string/image_label_favorite" />
+			app:srcCompat="@drawable/image_ic_twotone_star_checkable" />
 
 		<ImageView
 			android:id="@+id/edit"
 			android:layout_width="64dp"
 			android:layout_height="64dp"
+			android:contentDescription="@string/image_label_edit"
 			android:foreground="?attr/actionBarItemBackground"
 			android:onClick="@{() -> viewModel.setAction(Action.EDIT)}"
 			android:padding="16dp"
@@ -75,13 +77,13 @@
 			app:layout_constraintEnd_toStartOf="@+id/share"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/favorite"
-			app:srcCompat="@drawable/image_ic_twotone_edit"
-			android:contentDescription="@string/image_label_edit" />
+			app:srcCompat="@drawable/image_ic_twotone_edit" />
 
 		<ImageView
 			android:id="@+id/share"
 			android:layout_width="64dp"
 			android:layout_height="64dp"
+			android:contentDescription="@string/image_label_share"
 			android:foreground="?attr/actionBarItemBackground"
 			android:onClick="@{() -> viewModel.setAction(Action.SHARE)}"
 			android:padding="16dp"
@@ -90,14 +92,14 @@
 			app:layout_constraintEnd_toStartOf="@+id/delete"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/edit"
-			app:srcCompat="@drawable/image_ic_twotone_share"
-			android:contentDescription="@string/image_label_share" />
+			app:srcCompat="@drawable/image_ic_twotone_share" />
 
 		<ImageView
 			android:id="@+id/delete"
 			android:layout_width="64dp"
 			android:layout_height="64dp"
 			android:layout_marginEnd="16dp"
+			android:contentDescription="@string/image_label_delete"
 			android:foreground="?attr/actionBarItemBackground"
 			android:onClick="@{() -> viewModel.setAction(Action.DELETE)}"
 			android:padding="16dp"
@@ -106,8 +108,7 @@
 			app:layout_constraintEnd_toEndOf="parent"
 			app:layout_constraintHorizontal_bias="0.5"
 			app:layout_constraintStart_toEndOf="@+id/share"
-			app:srcCompat="@drawable/image_ic_twotone_delete"
-			android:contentDescription="@string/image_label_delete" />
+			app:srcCompat="@drawable/image_ic_twotone_delete" />
 
 		<androidx.constraintlayout.widget.Group
 			android:id="@+id/group"

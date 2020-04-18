@@ -7,9 +7,9 @@ fun futureFolderModule() = module {
 	single { FolderAdapter(androidContext()) }
 	factory {
 		FolderViewModel(
-			get(),
-			androidContext(),
-			get()
+			adapter = get(),
+			context = androidContext(),
+			repo = get()
 		)
 	}
 }

@@ -6,7 +6,7 @@
 	<group android:checkableBehavior="single">
 		<item
 			android:id="@+id/folder_navigation"
-			android:title="Home" />
+			android:title="@string/label_home" />
 		<item
 			android:id="@+id/settings_navigation"
 			android:title="@string/settings_label" />

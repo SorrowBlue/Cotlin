@@ -14,6 +14,7 @@ data class Image(
 	val contentType: String,
 	val size: Long,
 	val dateAdded: LocalDateTime,
-	val dateModified: LocalDateTime
+	val dateModified: LocalDateTime,
+	val rotate: Float = 0f
 ) : Parcelable
 

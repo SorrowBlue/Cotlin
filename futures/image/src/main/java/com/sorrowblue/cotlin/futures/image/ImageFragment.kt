@@ -21,7 +21,6 @@ import com.sorrowblue.cotlin.ui.fragment.DataBindingFragment
 import com.sorrowblue.cotlin.ui.fragment.appBarLayout
 import com.sorrowblue.cotlin.ui.fragment.toolbar
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
-import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsetsAndAppbarSize
 import com.sorrowblue.cotlin.ui.view.item
 import com.sorrowblue.cotlin.ui.view.setOnClickListener
 import kotlinx.coroutines.launch
@@ -43,7 +42,6 @@ internal class ImageFragment :
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-		super.onViewCreated(view, savedInstanceState)
 		binding.viewModel = viewModel
 		viewLifecycleOwner.lifecycle.addObserver(viewModel)
 		viewModel.action.observe(this) {
@@ -57,7 +55,6 @@ internal class ImageFragment :
 		}
 		binding.favorite.applyNavigationBarBottomMarginInsets()
 		binding.count.applyNavigationBarBottomMarginInsets()
-		binding.executePendingBindings()
 		viewModel.adapter.onClick = {
 			MaterialFade.create(requireContext(), true).also {
 				TransitionManager.beginDelayedTransition(appBarLayout.parent as ViewGroup, it)
@@ -72,30 +69,18 @@ internal class ImageFragment :
 			binding.root.systemUiVisibility = flag
 		}
 		postponeEnterTransition()
-		binding.root.doOnPreDraw {
-			startPostponedEnterTransition()
-		}
-		binding.viewPager2.doOnPreDraw {
-			viewModel.currentItem.value = args.position
-		}
+		binding.root.doOnPreDraw { startPostponedEnterTransition() }
+		binding.viewPager2.doOnPreDraw { viewModel.currentItem.value = args.position }
 		viewModel.currentItem.observe(this) {
-			binding.count.text = "${it + 1}/${viewModel.adapter.currentList.size}"
 			toolbar.title = viewModel.adapter.currentList[it].name
 		}
-		viewModel.isEmpty.observe(this) {
-			if (it) findNavController().navigateUp()
-		}
+		viewModel.isEmpty.observe(this) { if (it) findNavController().navigateUp() }
 	}
 
 	override fun onBindMenu(menu: Menu) {
 		menu.item<MenuItem>(R.id.open) {
 			it.setOnClickListener { viewModel.setAction(ImageViewModel.Action.OPEN) }
 		}
-	}
-
-	override fun onStart() {
-		super.onStart()
-		toolbar.title = args.folder.child[args.position].name
 	}
 
 	override fun onStop() {
@@ -117,8 +102,6 @@ internal class ImageFragment :
 				)
 				viewModel.refresh()
 			}
-		} else {
-			super.onActivityResult(requestCode, resultCode, data)
 		}
 	}
 

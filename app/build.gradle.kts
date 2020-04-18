@@ -1,8 +1,8 @@
 android {
 	defaultConfig {
 		applicationId = "com.sorrowblue.cotlin"
-		versionCode = 14
-		versionName = "1.0.0"
+		versionCode = 15
+		versionName = "1.0.1"
 	}
 	signingConfigs {
 		release {

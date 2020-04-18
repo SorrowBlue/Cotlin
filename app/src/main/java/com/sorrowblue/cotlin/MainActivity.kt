@@ -3,56 +3,59 @@ package com.sorrowblue.cotlin
 import android.Manifest.permission.READ_EXTERNAL_STORAGE
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.PermissionChecker
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import androidx.navigation.ui.setupWithNavController
+import androidx.navigation.ui.*
 import com.sorrowblue.cotlin.databinding.ActivityMainBinding
 import com.sorrowblue.cotlin.ui.UiViewModel
 import com.sorrowblue.cotlin.ui.delegate.DataBindingActivity
 import com.sorrowblue.cotlin.ui.view.applyNavigationBarBottomMarginInsets
 import com.sorrowblue.cotlin.ui.view.applySystemBarPaddingInsets
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import com.sorrowblue.cotlin.futures.folder.R as FolderR
+import com.sorrowblue.cotlin.futures.permission.R as PermissionR
+import com.sorrowblue.cotlin.futures.settings.R as SettingsR
 
 internal class MainActivity : DataBindingActivity<ActivityMainBinding>(R.layout.activity_main) {
 
 	private lateinit var appBarConfiguration: AppBarConfiguration
 	private val uiViewModel: UiViewModel by viewModel()
+	private val navController by navController()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		binding.uiViewModel = uiViewModel
-		binding.lifecycleOwner =  this
+		binding.lifecycleOwner = this
 		if (PermissionChecker.checkSelfPermission(
 				this,
 				READ_EXTERNAL_STORAGE
 			) != PermissionChecker.PERMISSION_GRANTED
 		) {
-			val navController = findNavController(R.id.nav_host_fragment)
-			navController.navigate(R.id.permission_navigation)
+			navController.navigate(PermissionR.id.permission_navigation)
 		}
 		setSupportActionBar(binding.appBarMain.toolbar)
 		applyFullScreen()
-		val navController = findNavController(R.id.nav_host_fragment)
 		appBarConfiguration =
-			AppBarConfiguration(setOf(R.id.folderFragment), binding.drawerLayout)
+			AppBarConfiguration(
+				setOf(FolderR.id.folderFragment, SettingsR.id.settingsFragment),
+				binding.drawerLayout
+			)
 		setupActionBarWithNavController(navController, appBarConfiguration)
 		binding.navView.setupWithNavController(navController)
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.main, menu)
-		return true
+		return super.onCreateOptionsMenu(menu)
 	}
 
-	override fun onSupportNavigateUp(): Boolean {
-		val navController = findNavController(R.id.nav_host_fragment)
-		return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-	}
+	override fun onOptionsItemSelected(item: MenuItem) =
+		super.onOptionsItemSelected(item).also { item.onNavDestinationSelected(navController) }
+
+	override fun onSupportNavigateUp() =
+		navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
 	private val contentView get() = ActivityCompat.requireViewById<View>(this, android.R.id.content)
 

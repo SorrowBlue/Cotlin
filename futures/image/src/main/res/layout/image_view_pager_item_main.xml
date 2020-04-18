@@ -4,13 +4,18 @@
 
 	<data>
 
+		<variable
+			name="image"
+			type="com.sorrowblue.cotlin.domains.image.Image" />
 	</data>
 
-	<com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+	<com.github.chrisbanes.photoview.PhotoView
 		android:id="@+id/imageView"
+		coil_uri="@{image.uri}"
+		rotationTo="@{image.rotate}"
 		android:layout_width="match_parent"
 		android:layout_height="match_parent"
-		app:srcCompat="@drawable/ic_launcher_foreground">
+		android:scaleType="fitCenter">
 
-	</com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView>
+	</com.github.chrisbanes.photoview.PhotoView>
 </layout>

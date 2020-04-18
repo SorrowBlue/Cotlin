@@ -7,5 +7,12 @@ import org.koin.dsl.module
 
 fun futureImageModule() = module {
 	factory { ImagePagerAdapter() }
-	viewModel { (folder: Folder) -> ImageViewModel(get(), androidContext(),folder,  get()) }
+	viewModel { (folder: Folder) ->
+		ImageViewModel(
+			repo = get(),
+			context = androidContext(),
+			folder = folder,
+			adapter = get()
+		)
+	}
 }

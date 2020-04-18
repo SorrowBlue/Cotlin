@@ -1,6 +1,8 @@
 android {
 	resourcePrefix("image_")
-	buildFeatures.dataBinding = true
+	buildFeatures {
+		dataBinding = true
+	}
 }
 
 dependencies {

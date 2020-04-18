@@ -10,10 +10,10 @@ fun futureFileModule() = module {
 	factory { (folder: Folder) -> FileAdapter(androidContext(), folder) }
 	viewModel { (folder: Folder) ->
 		FileViewModel(
-			androidContext(),
-			folder,
-			get { parametersOf(folder) },
-			get()
+			context = androidContext(),
+			folder = folder,
+			adapter = get { parametersOf(folder) },
+			repo = get()
 		)
 	}
 }
