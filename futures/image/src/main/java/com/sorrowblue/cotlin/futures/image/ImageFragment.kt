@@ -4,7 +4,6 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
-import android.transition.TransitionManager
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -14,6 +13,7 @@ import androidx.core.view.isVisible
 import androidx.lifecycle.coroutineScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import androidx.transition.TransitionManager
 import com.google.android.material.transition.MaterialFade
 import com.google.android.material.transition.MaterialSharedAxis
 import com.sorrowblue.cotlin.domains.image.ImageRepository
@@ -37,8 +37,8 @@ internal class ImageFragment :
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
-		exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
+		enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+		exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +56,7 @@ internal class ImageFragment :
 		binding.favorite.applyNavigationBarBottomMarginInsets()
 		binding.count.applyNavigationBarBottomMarginInsets()
 		viewModel.adapter.onClick = {
-			MaterialFade.create(requireContext(), true).also {
+			MaterialFade().also {
 				TransitionManager.beginDelayedTransition(appBarLayout.parent as ViewGroup, it)
 				appBarLayout.isVisible = !appBarLayout.isVisible
 				binding.group.isVisible = !binding.group.isVisible
@@ -86,7 +86,7 @@ internal class ImageFragment :
 	override fun onStop() {
 		super.onStop()
 		val appBar = appBarLayout
-		MaterialFade.create(requireContext()).also {
+		MaterialFade().also {
 			TransitionManager.beginDelayedTransition(appBar.parent as ViewGroup, it)
 			appBar.isVisible = true
 		}

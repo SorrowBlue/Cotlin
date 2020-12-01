@@ -11,8 +11,8 @@ internal class SettingsFragment : PreferenceFragmentCompat() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Y, true)
-		exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Y, false)
+		enterTransition = MaterialSharedAxis(MaterialSharedAxis.Y, true)
+		exitTransition = MaterialSharedAxis(MaterialSharedAxis.Y, false)
 	}
 
 	override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {

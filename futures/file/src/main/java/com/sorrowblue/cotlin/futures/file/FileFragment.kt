@@ -27,8 +27,8 @@ internal class FileFragment : DataBindingFragment<FragmentBinding>(R.layout.file
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		enterTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, true)
-		exitTransition = MaterialSharedAxis.create(requireContext(), MaterialSharedAxis.Z, false)
+		enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+		exitTransition = MaterialSharedAxis(MaterialSharedAxis.Z, false)
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

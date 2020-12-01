@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.view.View
 import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.PermissionChecker
 import androidx.core.content.PermissionChecker.PERMISSION_GRANTED
 import androidx.core.net.toUri
@@ -18,8 +19,6 @@ import com.sorrowblue.cotlin.ui.fragment.appBarLayout
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.sorrowblue.cotlin.futures.permission.databinding.PermissionFragmentMainBinding as FragmentBinding
-
-const val REQUEST_READ_EXTERNAL_STORAGE = 100
 
 internal class PermissionFragment :
 	DataBindingFragment<FragmentBinding>(R.layout.permission_fragment_main) {
@@ -58,19 +57,13 @@ internal class PermissionFragment :
 		uiViewModel.isFullScreen = false
 	}
 
-	override fun onRequestPermissionsResult(
-		requestCode: Int, permissions: Array<out String>, grantResults: IntArray
-	) {
-		when {
-			requestCode != REQUEST_READ_EXTERNAL_STORAGE ->
-				super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-			grantResults.firstOrNull() == PERMISSION_GRANTED ->
+	private fun requestPermissions() {
+		requireActivity().registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+			if (it.all(Map.Entry<String, Boolean>::value)) {
 				findNavController().popBackStack()
-			else -> viewModel.shouldShowDetails.value =
+			} else {
 				shouldShowRequestPermissionRationale(READ_EXTERNAL_STORAGE)
-		}
+			}
+		}.launch(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE))
 	}
-
-	private fun requestPermissions() =
-		requestPermissions(arrayOf(READ_EXTERNAL_STORAGE, WRITE_EXTERNAL_STORAGE), REQUEST_READ_EXTERNAL_STORAGE)
 }
